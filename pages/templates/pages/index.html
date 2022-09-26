@@ -137,11 +137,11 @@
               <div class="P-list-item-desc">
                 <span>Category:{{ featured_ad.category }}<br></span>
                 Author:{{ featured_ad.author }} <br>
-                Prizepool : {{ featured_ad.price }}<br>
+                Prizepool : {{ featured_ad.prize }}<br>
               </div>
               <!--END PREMIUM DESCRIPTION-->
               <!--PREMIUM BUTTON (link)-->
-              <button class="P-list-item-btn"><a href="{% url 'ads-detail' featured_ad.id %}">{{ featured_ad.condition }} </a>
+              <button class="P-list-item-btn"><a href="{% url 'ads-detail' featured_ad.id %}">{{ featured_ad.entry }} </a>
               
               </button>
               <!--END PREMIUM BUTTON-->
@@ -178,14 +178,14 @@
               <!--END PUBG MOBILE LIST TITLE-->
               <div class="list-prize">Prize Amount&nbsp 
                 <!--PUBG MOBILE PRIZE AMOUNT-->
-                <span>&#8377;&nbsp{{ recent_ad.price }}</span>
+                <span>&#8377;&nbsp{{ recent_ad.prize }}</span>
                 <!--END PUBG MOBILE PRIZE AMOUNT-->
               </div>
               
               
               <div class="list-entry">
                 <div class="list-entry">
-                  <button class="P-list-item-btn"><a href="{% url 'ads-detail' recent_ad.id %}">{{ recent_ad.condition }}</a>
+                  <button class="P-list-item-btn"><a href="{% url 'ads-detail' recent_ad.id %}">{{ recent_ad.entry }}</a>
                     <!--PUBG MOBILE ENTRY AMOUNT->
                     <!--END PUBG MOBILE ENTRY AMOUNT-->
                   </button>
