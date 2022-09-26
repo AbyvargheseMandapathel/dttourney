@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--stylesheet-->
+  <link rel="stylesheet" href="{% static 'css/styleindex.css' %}">
+  <link rel="stylesheet" media="screen and (max-width: 1050px)" href="{% static 'css/ministyle.css' %}">
+  <!--End stylesheet-->
+
+  <!--Title-->
+  <title>Daily Tourneys</title>
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+   <!--End Title-->
+
+  <!--Slider-->
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+  <!--End Slider-->
+
+   <!--Fonts-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Coda+Caption:wght@800&display=swap" rel="stylesheet"> 
+  <!--End Fonts-->
+
+  <!-- FONTAWESOME -->
+  <script src="https://kit.fontawesome.com/114dee6860.js" crossorigin="anonymous"></script>
+  <!-- END FONTAWESOME -->
+
+  <!--Jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!--End Jquery-->
+  
+  <!-- visitors count -->
+  <script>
+  function cb(response) {
+      document.getElementById('count').innerText = response.value;
+  }
+  </script>
+  <script async       src="https://api.countapi.xyz/hit/eSportsDaily.hacknon1000.repl.co/visits?callback=cb">
+  </script>
+  <!-- END visitors count -->
+
+</head>
+<body>
+  <!--SideNav-->
+  <div id="mySidenav" class="sidenav">
+    <div class="sidenav-main">
+      <div class="sub-header">
+        <div class="open-nav-btn">
+          <button style="font-size:25px;cursor:pointer;color: #d4d4d4;border: 3px solid grey;border-radius: 8px;padding: 5px 15px;background: transparent;" onclick="closeNav()">&#9776;</button>
+        </div>
+        <img src="images/logo.png" alt="" class="logo">
+        <div class="logo-title">DAILY<span style="color: white;">TOURNEYS</span></div>
+      </div>
+
+      <div class="nav-item">
+        <div class="fas-ico fas-ico-active">
+          <i class="fas fa-home"></i>
+        </div>
+        <div class="nav-item-title">&nbspHOME</div>
+      </div>
+    {% if user.is_authenticated %}
+      <div class="nav-item">
+        <div class="fas-ico">
+          <i class="fa fa-times"></i>
+        </div>
+        <a href = "{% url 'logout' %}"><div class="nav-item-title">&nbspSIGNOUT</div></a>
+      </div>
+{% else %}
+
+      <div class="nav-item">
+        <div class="fas-ico">
+          <i class="fa fa-user"></i>
+        </div>
+        <a href = "{% url 'login' %}"><div class="nav-item-title">&nbspSIGNIN</div></a>
+      </div>
+      <div class="nav-item">
+        <div class="fas-ico">
+          <i class="fa fa-user-plus"></i>
+        </div>
+        <a href = "{% url 'signup' %}"><div class="nav-item-title">&nbspSIGNUP</div></a>
+      </div>
+        {% endif %}
+
+      
+      <div class="nav-item">
+        <div class="fas-ico">
+          <i class="fas fa-info"></i>
+        </div>
+        <div class="nav-item-title">&nbspABOUT</div>
+      </div>
+
+    </div>
+    <div class="sidenav-sub" onclick="closeNav()"></div>
+  </div>
+  <!--End SideNav-->
+
+  <!--Header-->
+  <div class="header">
+    <div class="sub-header">
+      <div class="open-nav-btn">
+        <button style="font-size:25px;cursor:pointer;color: #d4d4d4;border: 1px solid grey;border-radius: 8px;padding: 5px 15px;background: transparent;" onclick="openNav()">&#9776;</button>
+      </div>
+      <img src="images/logo.png" alt="" class="logo">
+    <div class="logo-title">DAILY<span style="color: white;">TOURNEYS</span></div>
+    </div>
+  </div>
+  <!--End Header-->
+
+  <!--Content-->
+  <div class="content">
+ {% for featured_ad in featured_ads %}
+    <!--PREMIUM-->
+    <div class="section section-2">
+      <div class="tag">FEATURED</div>
+      <div class="flex-class">
+        <!--SLIDER-->
+        <div class="carousel" data-flickity='{ "groupCells": true, "autoPlay": true }'>
+            <!--SLIDER ITEM-->
+            <div class="premium-carousel-cell">
+              {% for img in featured_ad.adsimages_set.all %}
+                {% if forloop.first %}
+              <!--PREMIUM IMG-->
+              <img src="{{ img.image.url }}" alt="banner1">
+              {% endif %}
+                {% endfor %}
+              <!--END PREMIUM IMG-->
+              <!--PREMIUM TITLE-->
+              <div class="P-list-item-title">{{ featured_ad.title }}</div>
+              <!--END PREMIUM TITLE-->
+              <!--PREMIUM DESCRIPTION-->
+              <div class="P-list-item-desc">
+                <span>Category:{{ featured_ad.category }}<br></span>
+                Author:{{ featured_ad.author }} <br>
+                Prizepool : {{ featured_ad.price }}<br>
+              </div>
+              <!--END PREMIUM DESCRIPTION-->
+              <!--PREMIUM BUTTON (link)-->
+              <button class="P-list-item-btn"><a href="{% url 'ads-detail' featured_ad.id %}">{{ featured_ad.condition }} </a>
+              
+              </button>
+              <!--END PREMIUM BUTTON-->
+            </div>
+        </div>
+            <!--END SLIDER ITEM-->
+      </div>  
+    </div>
+    <!--END PREMIUM-->
+{% endfor %}
+    
+    <!--PUBG MOBILE TOURNAMENTS-->
+    <div class="section section-3">
+      <div class="tag-thumbnail">
+        <div class="tag"><div class="rotate"> RECENT <span></span> LISTINGS</div></div>
+      </div>
+
+      <div class="scroll">
+        <div class="list">
+        <!-- LIST-->
+{% for recent_ad in recent_ads %}
+          <!--LIST ITEM-->
+          <div class="list-item">
+            {% for img in recent_ad.adsimages_set.all %}
+                    {% if forloop.first %}
+            <!--PUBG MOBILE LIST IMAGE-->
+            <img src="{{ img.image.url }}" alt="" class="list-thumbnail">
+            {% endif %}
+                    {% endfor %}
+            <!--END PUBG MOBILE LIST IMAGE-->
+            <div class="list-desc">
+              <!--PUBG MOBILE LIST TITLE-->
+              <div class="list-title">{{ recent_ad.title}}</div>
+              <!--END PUBG MOBILE LIST TITLE-->
+              <div class="list-prize">Prize Amount&nbsp 
+                <!--PUBG MOBILE PRIZE AMOUNT-->
+                <span>&#8377;&nbsp{{ recent_ad.price }}</span>
+                <!--END PUBG MOBILE PRIZE AMOUNT-->
+              </div>
+              
+              
+              <div class="list-entry">
+                <div class="list-entry">
+                  <button class="P-list-item-btn"><a href="{% url 'ads-detail' recent_ad.id %}">{{ recent_ad.condition }}</a>
+                    <!--PUBG MOBILE ENTRY AMOUNT->
+                    <!--END PUBG MOBILE ENTRY AMOUNT-->
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--END LIST ITEM-->
+
+        <!--END LIST-->
+        </div>
+      </div>
+    </div>
+    <!--END PUBG MOBILE TOURNAMENTS-->
+{% endfor %}
+    <!--VISITORS COUNT-->
+    <div class="section section-5">
+      <div class="visit-count">
+        
+        <div id="count">0</div>
+        <div class="visit-tag">Visited</div>
+      </div>  
+    </div>
+    <!--END VISITORS COUNT-->
+    
+    <!--FOOTER-->
+    <div class="footer">
+      <div class="social-icons">
+        <!--WHATSAPP-->
+        <a href="https://chat.whatsapp.com/JZyo79x2MPF5QcjyV7Ek6a" target="_blank">
+        <!--END WHATSAPP-->
+            <div class="fab-class fab-whatsapp">
+              <i id="whatsapp-icn" class="fab fa-whatsapp"></i>
+            </div>
+        </a>
+        <!--INSTAGRAM-->
+        <a href="https://instagram.com/_esportsdaily_?igshid=1xifmsei6shk6" target="_blank">
+        <!--END INSTAGRAM-->
+            <div class="fab-class fab-instagram">
+              <i id="instagram-icn" class="fab fa-instagram"></i>
+            </div>
+        </a>
+        <!--FACEBOOK-->
+        <a href="https://www.facebook.com/ESports-Daily-105646001496738/" target="_blank">
+        <!--END FACEBOOK-->
+            <div class="fab-class fab-facebook">
+              <i id="facebook-icn" class="fab fa-facebook"></i>
+            </div>
+        </a>
+        <!--DISCORD-->
+        <a href="https://discord.gg/4b2E6DPdSC" target="_blank">
+        <!--END DISCORD-->
+            <div class="fab-class fab-discord">
+              <i id="discord-icn" class="fab fa-discord"></i>
+            </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- SCRIPT -->
+  <script src="{% static 'js/scriptnew.js' %}"></script>
+  <!--END SCRIPT-->
+
+  <!--IMAGE SLIDER SCRIPT-->
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+  <script>
+    $('.main-carousel').flickity({
+      // options
+      cellAlign: 'left',
+      wrapAround: true,
+      freeScroll: true
+    });
+  </script>
+  <!--END IMAGE SLIDER SCRIPT-->
+</body>
+</html>

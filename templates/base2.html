@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--stylesheet-->
+  <link rel="stylesheet" href="{% static 'css/styleindex.css' %}">
+  <link rel="stylesheet" media="screen and (max-width: 1050px)" href="{% static 'css/ministyle.css' %}">
+  <!--End stylesheet-->
+
+  <!--Title-->
+  <title>Daily Tourneys</title>
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+   <!--End Title-->
+
+  <!--Slider-->
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+  <!--End Slider-->
+
+   <!--Fonts-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Coda+Caption:wght@800&display=swap" rel="stylesheet"> 
+  <!--End Fonts-->
+
+  <!-- FONTAWESOME -->
+  <script src="https://kit.fontawesome.com/114dee6860.js" crossorigin="anonymous"></script>
+  <!-- END FONTAWESOME -->
+  <!-- NAV BAR -->
+    <script src="{% static 'js/scriptnew.js' %}"></script>
+  <!-- NAV BAR -->
+
+
+  <!--Jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!--End Jquery-->
+  
+  <!-- visitors count -->
+  <script>
+  function cb(response) {
+      document.getElementById('count').innerText = response.value;
+  }
+  </script>
+  <script async       src="https://api.countapi.xyz/hit/eSportsDaily.hacknon1000.repl.co/visits?callback=cb">
+  </script>
+  <!-- END visitors count -->
+
+</head>
+<body>
+  <!--SideNav-->
+  <div id="mySidenav" class="sidenav">
+    <div class="sidenav-main">
+      <div class="sub-header">
+        <div class="open-nav-btn">
+          <button style="font-size:25px;cursor:pointer;color: #d4d4d4;border: 3px solid grey;border-radius: 8px;padding: 5px 15px;background: transparent;" onclick="closeNav()">&#9776;</button>
+        </div>
+        <img src="images/logo.png" alt="" class="logo">
+        <div class="logo-title">DAILY<span style="color: white;">TOURNEYS</span></div>
+      </div>
+
+      <div class="nav-item">
+        <div class="fas-ico fas-ico-active">
+          <i class="fas fa-home"></i>
+        </div>
+        <div class="nav-item-title">&nbspHOME</div>
+      </div>
+    {% if user.is_authenticated %}
+      <div class="nav-item">
+        <div class="fas-ico">
+          <i class="fa fa-times"></i>
+        </div>
+        <a href = "{% url 'logout' %}"><div class="nav-item-title">&nbspSIGNOUT</div></a>
+      </div>
+{% else %}
+
+      <div class="nav-item">
+        <div class="fas-ico">
+          <i class="fa fa-user"></i>
+        </div>
+        <a href = "{% url 'login' %}"><div class="nav-item-title">&nbspSIGNIN</div></a>
+      </div>
+      <div class="nav-item">
+        <div class="fas-ico">
+          <i class="fa fa-user-plus"></i>
+        </div>
+        <a href = "{% url 'signup' %}"><div class="nav-item-title">&nbspSIGNUP</div></a>
+      </div>
+        {% endif %}
+
+      
+      <div class="nav-item">
+        <div class="fas-ico">
+          <i class="fas fa-info"></i>
+        </div>
+        <div class="nav-item-title">&nbspABOUT</div>
+      </div>
+
+    </div>
+    <div class="sidenav-sub" onclick="closeNav()"></div>
+  </div>
+  <!--End SideNav-->
+
+  <!--Header-->
+  <div class="header">
+    <div class="sub-header">
+      <div class="open-nav-btn">
+        <button style="font-size:25px;cursor:pointer;color: #d4d4d4;border: 1px solid grey;border-radius: 8px;padding: 5px 15px;background: transparent;" onclick="openNav()">&#9776;</button>
+      </div>
+      <img src="images/logo.png" alt="" class="logo">
+    <div class="logo-title">DAILY<span style="color: white;">TOURNEYS</span></div>
+    </div>
+  </div>
+  <!--End Header-->
+  {% block content %}
+
+{% endblock content %}
+</div>

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% load embed_video_tags %}
+{% block content %}
+<!--stylesheet-->
+  <link rel="stylesheet" href="{% static 'css/productdetail.css' %}">
+
+<div class = "card-wrapper">
+  <div class = "card">
+    <!-- card left -->
+    <div class = "product-imgs">
+      <div class = "img-display">
+        <div class = "img-showcase">
+          {% for p in ads_photos %}
+          <img src = "{{p.image.url}}" alt = "shoe image">
+         <!-- <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt = "shoe image">
+          <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg" alt = "shoe image">
+          <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg" alt = "shoe image">
+        </div>
+      </div>
+      <div class = "img-select">
+        <div class = "img-item">
+          <a href = "#" data-id = "1">
+            <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg" alt = "shoe image">
+          </a>
+        </div>
+        <div class = "img-item">
+          <a href = "#" data-id = "2">
+            <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt = "shoe image">
+          </a>
+        </div>
+        <div class = "img-item">
+          <a href = "#" data-id = "3">
+            <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg" alt = "shoe image">
+          </a>
+        </div>
+        <div class = "img-item">
+          <a href = "#" data-id = "4">
+            <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg" alt = "shoe image">-->
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- card right -->
+    <div class = "product-content">
+      <!--<h2 class = "product-title">nike shoes</h2>
+      <a href = "#" class = "product-link">visit nike store</a>
+      <div class = "product-rating">
+        <i class = "fas fa-star"></i>
+        <i class = "fas fa-star"></i>
+        <i class = "fas fa-star"></i>
+        <i class = "fas fa-star"></i>
+        <i class = "fas fa-star-half-alt"></i>
+        <span>4.7(21)</span>
+      </div>-->
+<div class = "product-detail">
+        <h2>{{ ads_detail.title }}</h2></div>
+      <!--<div class = "product-price">
+        <p class = "new-price">PrizePool<span>INR</span></p>
+        <p class = "new-price">NO of Slots <span>Slots</span></p>
+      </div>-->
+
+      <div class = "product-detail">
+        <h2>Event Description:</h2>
+        <p></p>
+        <p></p>
+        <ul>
+          <li>PrizePool: <span>{{ ads_detail.prize }}</span></li>
+          <li>No Of Slots: <span>{{ ads_detail.no_of_slots }}</span></li>
+          <li>Entry: <span>{{ ads_detail.entry }}</span></li>
+          <li>Author: <span><a href="{% url 'author-archive' ads_detail.author.pk %}">{{ ads_detail.author }}</a></span></li>
+          
+        </ul>
+      </div>
+
+      <div class = "purchase-info">
+       <!--<input type = "number" min = "0" value = "1">
+        <button type = "button" class = "btn">
+          Add to Cart <i class = "fas fa-shopping-cart"></i>
+        </button>-->
+        <a href ="https://{{ ads_detail.registeration_url }}"><button type = "button" class = "btn">Register Now</button></a>
+      </div>
+{% endfor %}
+      <div class = "social-links">
+        <p>Share At: </p>
+        <a href = "#">
+          <i class = "fab fa-facebook-f"></i>
+        </a>
+        <a href = "#">
+          <i class = "fab fa-twitter"></i>
+        </a>
+        <a href = "#">
+          <i class = "fab fa-instagram"></i>
+        </a>
+        <a href = "#">
+          <i class = "fab fa-whatsapp"></i>
+        </a>
+        <a href = "#">
+          <i class = "fab fa-pinterest"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+  <script src = "{% static 'js/product.js' %}"></script>
+  {% endblock content %}
