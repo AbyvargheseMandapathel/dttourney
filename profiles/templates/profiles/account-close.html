@@ -1,7 +1,23 @@
-{% extends "base.html" %}
 {% load static %}
 {% block content %}
+  <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Icon -->
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/line-icons.css' %}">
+    <!-- Slicknav -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slicknav.css' %}">
+    <!-- Nivo Lightbox -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox.css' %}">
+    <!-- Animate -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <!-- Filepond CSS -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <!-- Main Style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <!-- Responsive Style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
 
+</head>
     <!-- Page Header Start -->
     <div class="page-header" style="background: url({% static 'img/banner1.jpg' %});">
       <div class="container">

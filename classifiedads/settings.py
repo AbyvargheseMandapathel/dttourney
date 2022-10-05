@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import environ
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -178,13 +182,13 @@ CKEDITOR_CONFIGS = {
 
 EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'  
 # MAILER_EMAIL_BACKEND = EMAIL_BACKEND
-DEFAULT_FROM_EMAIL ='dailytourneys@rediffmail.com'
+DEFAULT_FROM_EMAIL =env('EMAIL_HOST_USER')
 EMAIL_USE_TLS = True  
-MAILJET_API_KEY = "74296ff4a1ba4020c8d3c10328ab759d"
-MAILJET_API_SECRET = "24da9dabd74ccf1e7822076670b69e53"
+MAILJET_API_KEY = env('MAILJET_API_KEY')
+MAILJET_API_SECRET = env('MAILJET_API_SECRET')
 EMAIL_HOST = 'in-v3.mailjet.com'  
-EMAIL_HOST_USER = 'dailytourneys@rediffmail.com'  
-EMAIL_HOST_PASSWORD = 'Aby@2000'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')  
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

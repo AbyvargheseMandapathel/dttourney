@@ -1,5 +1,6 @@
 { pkgs }: {
   deps = [
+    pkgs.imagemagick6_light
     pkgs.python38Full
   ];
   env = {
