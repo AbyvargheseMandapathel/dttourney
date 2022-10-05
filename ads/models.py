@@ -37,6 +37,7 @@ class Ads(models.Model):
     video = EmbedVideoField(null=True, blank=True) 
     is_featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
+    img_link= models.CharField(max_length=1000)
 
     class Meta:
         verbose_name_plural = "Classified Ads"
@@ -65,7 +66,7 @@ class Category(models.Model):
 # Image Model
 class AdsImages(models.Model):
     ads = models.ForeignKey(Ads, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='uploads/%Y/%m/%d', default=None)
+    #image = models.ImageField(upload_to='uploads/%Y/%m/%d', default=None)
 
     def __str__(self):
         return self.ads.title
