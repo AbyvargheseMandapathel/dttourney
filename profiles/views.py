@@ -10,6 +10,8 @@ from ads.models import Author
 
 from authentication.forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 
+#pagination
+from django.core.paginator import Paginator
 
 # Model Forms.
 
@@ -22,7 +24,14 @@ def profile_dashboard(request):
     total_ads = request.user.author.ads_set.all().count()
     featured_ads = request.user.author.ads_set.filter(is_featured=True).count()
 
+    #pagination
+    p=Paginator(request.user.author.ads_set.all(),6)
+
+    page = request.GET.get('page')
+    ads = p.get_page(page)
+
     context = {
+        'ads':ads,
         'ads_posted' : ads_posted,
         'total_ads' : total_ads,
         'featured_ads' : featured_ads

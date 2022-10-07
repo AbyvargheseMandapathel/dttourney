@@ -16,12 +16,28 @@
         "index": 205
       }
     ],
+    "profiles/templates/profiles/account-dashboard.html": [
+      {
+        "id": "37169276-f54a-466a-bc4c-9021a0831061",
+        "line": 3,
+        "version": 97,
+        "index": 63
+      }
+    ],
     "profiles/templates/profiles/account-setting2.html": [
       {
         "id": "93b85e32-ed90-4055-a34d-27e7661ec711",
         "line": 11,
         "version": 1,
         "index": 397
+      }
+    ],
+    "profiles/views.py": [
+      {
+        "id": "d5169400-d595-47b0-9092-e28640d7d04c",
+        "line": 30,
+        "version": 46,
+        "index": 858
       }
     ]
   }

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from ads.models import Ads, Category, AdsImages, AdsTopBanner, AdsRightBanner, AdsBottomBanner
+from django.contrib.auth.models import User
 
 
 # Model Forms.
@@ -15,6 +16,9 @@ def home(request):
     
     # Fetch featured Ads
     featured_ads = Ads.objects.filter(is_featured=True).filter(is_active=True)
+    #get counts
+    ads_count = Ads.objects.all().count()
+    user_count = User.objects.all().count()
     
     # Browse Ads by Category
     category_listing = Category.objects.all()
@@ -41,6 +45,8 @@ def home(request):
         #'state_listing' : state_listing,
         'sidebar_banners' : sidebar_banners,
         'top_banner' : top_banner,
+        'user_count':user_count,
+        'ads_count':ads_count,
         'bottom_banner' : bottom_banner,
     }
 
