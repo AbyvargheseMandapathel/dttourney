@@ -11,32 +11,8 @@
     <div class = "product-imgs">
       <div class = "img-display">
         <div class = "img-showcase">
-          {% for p in ads_photos %}
+          
           <img src = "{{ ads_detail.img_link }}" alt = "{{ ads_detail.title }}">
-         <!-- <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt = "shoe image">
-          <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg" alt = "shoe image">
-          <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg" alt = "shoe image">
-        </div>
-      </div>
-      <div class = "img-select">
-        <div class = "img-item">
-          <a href = "#" data-id = "1">
-            <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg" alt = "shoe image">
-          </a>
-        </div>
-        <div class = "img-item">
-          <a href = "#" data-id = "2">
-            <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt = "shoe image">
-          </a>
-        </div>
-        <div class = "img-item">
-          <a href = "#" data-id = "3">
-            <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg" alt = "shoe image">
-          </a>
-        </div>
-        <div class = "img-item">
-          <a href = "#" data-id = "4">
-            <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg" alt = "shoe image">-->
           </a>
         </div>
       </div>
@@ -61,9 +37,8 @@
       </div>-->
 
       <div class = "product-detail">
-        <h2>Event Description:</h2>
-        <p></p>
-        <p></p>
+        <h2>Description:</h2>
+        <p>{{ ads_detail.description |safe}}</p>
         <ul>
           <li>PrizePool: <span>{{ ads_detail.prize }}</span></li>
           <li>No Of Slots: <span>{{ ads_detail.no_of_slots }}</span></li>
@@ -80,7 +55,7 @@
         </button>-->
         <a href ="https://{{ ads_detail.registeration_url }}"><button type = "button" class = "btn">Register Now</button></a>
       </div>
-{% endfor %}
+ 
       <div class = "social-links">
         <p>Share At: </p>
         <a href = "#">

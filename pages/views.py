@@ -11,7 +11,7 @@ from ads.models import Ads, Category, AdsImages, AdsTopBanner, AdsRightBanner, A
 def home(request):
     
     # Fetch recend ads
-    recent_ads = Ads.objects.filter(is_active=True).order_by('-date_created')[0:3]
+    recent_ads = Ads.objects.filter(is_active=True).order_by('-date_created')[0:4]
     
     # Fetch featured Ads
     featured_ads = Ads.objects.filter(is_featured=True).filter(is_active=True)

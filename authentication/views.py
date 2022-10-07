@@ -29,7 +29,7 @@ def signup_view(request):
             instance.save()
 
             site = get_current_site(request)
-            mail_subject = "Confirm your HuntingAds account"
+            mail_subject = "Confirm your DailyTourneys account"
             message = render_to_string('authentication/confirm-email.html', {
                 'user':instance,
                 'domain':site.domain,

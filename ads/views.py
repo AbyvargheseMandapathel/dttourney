@@ -11,6 +11,9 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
 
+#Pagination
+from django.core.paginator import Paginator
+
 # importing messages
 from django.contrib import messages
 
@@ -50,6 +53,9 @@ def post_ads(request):
         # Get user's phone
         phone = request.POST.get('phone')
 
+        #Get Image URL
+        img_link = request.POST.get('img_link')
+
         # Get ad video
         video = request.POST.get('video')
 
@@ -60,14 +66,16 @@ def post_ads(request):
         length = request.POST.get('length')
 
         # Create the ad
-        ads = Ads.objects.create(author=request.user.author, title=title, description=description, prize=prize, category=c, entry=entry, no_of_slots=no_of_slots, registeration_url=registeration_url, video=video)
+        ads = Ads.objects.create(author=request.user.author, title=title, description=description, prize=prize, category=c, entry=entry, no_of_slots=no_of_slots, img_link=img_link, registeration_url=registeration_url, video=video)
+        
+
 
         # Attach the images with the associated ad
-        for file_num in range(0, int(length)):
-            AdsImages.objects.create(
-                ads=ads,
-                image=request.FILES.get(f'images{file_num}')
-            )
+        #for file_num in range(0, int(length)):
+         #   AdsImages.objects.create(
+      #          ads=ads,
+                #image=request.FILES.get(f'images{file_num}')
+ #           )
         
         # Send email notificaton to Admin
         mail_subject = "New Ads submitted"
@@ -85,17 +93,29 @@ def post_ads(request):
             to_list,
             fail_silently=False,
         )
+        return render(request, 'ads/post-success.html')
         
     return render(request, 'ads/post-ads.html')
 
 # Ads listing view
 def ads_listing(request):
     ads_listing = Ads.objects.all()
-    category_listing = Category.objects.annotate(total_ads=Count('ads')).order_by('category_name')
+
+    #setting up pagination
+
+    p=Paginator(Ads.objects.all(),12)
+
+    page = request.GET.get('page')
+    ads = p.get_page(page)
+    
+
+  
+    #category_listing = Category.objects.annotate(total_ads=Count('ads')).order_by('category_name')
 
     context = {
-        'ads_listing' : ads_listing,
-        'category_listing' : category_listing
+        #'ads_listing' : ads_listing,
+        'ads':ads
+      #  'category_listing' : category_listing
     }
 
     return render(request, 'ads/ads-listing.html', context)
@@ -162,22 +182,27 @@ def ads_author_archive(request, pk):
 
 # Ads search/filter view
 def ads_search(request):
-
-    state = request.GET.get('state_name')
-    category = request.GET.get('category_name')
-
-    if state:
-        ads_search_result = Ads.objects.filter(state__state_name=state)
-    elif category:
-        ads_search_result = Ads.objects.filter(category__category_name=category)
-    else:
-        ads_search_result = Ads.objects.filter(state__state_name=state).filter(category__category_name=category)
     
-    context = {
+    if request.method=="POST":
+      searched=request.POST['searched']
+      ads_search_result = Ads.objects.filter(title__contains=searched)
+    
+    #state = request.GET.get('state_name')
+    #category = request.GET.get('category_name')
+
+    #if state:
+     #   ads_search_result = Ads.objects.filter(state__state_name=state)
+    #elif category:
+      #  ads_search_result = Ads.objects.filter(category__category_name=category)
+    #else:
+     #   ads_search_result = Ads.objects.filter(state__state_name=state).filter(category__category_name=category)
+    
+      context = {
+        'searched':searched,
         'ads_search_result':ads_search_result
     }
 
-    return render(request, 'ads/ads-search.html', context)
+    return render(request, 'ads/ads-search.html',context)
 
 # Ads delete view
 @login_required(login_url='login')

@@ -1,10 +1,18 @@
 {
   "files": {
+    "ads/views.py": [
+      {
+        "id": "928342b9-8355-453b-82c2-23052b9d8819",
+        "line": 9,
+        "version": 658,
+        "index": 256
+      }
+    ],
     "classifiedads/settings.py": [
       {
         "id": "c879b0de-10f4-43dc-b878-bd1b714e2871",
         "line": 8,
-        "version": 108,
+        "version": 209,
         "index": 205
       }
     ],

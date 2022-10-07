@@ -10,51 +10,30 @@
       
       {% if ads_search_result %}
         {% for ad_search in ads_search_result %}
-        <div class="col-lg-12">
-          <h1 class="section-title">We found the following Classifieds for you</h1>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
-          <div class="featured-box">
-            <figure>
-              <a href="{% url 'ads-detail' ad_search.id %}">
-                  {% for img in ad_search.adsimages_set.all %}
-                  {% if forloop.first %}
-                      <img class="img-fluid" src="{{ img.image.url }}" alt="">
-                  {% endif %}
-                  {% endfor %}
-              </a>
-            </figure>
-            
-            <div class="feature-content">
-              <div class="product">
-                  <a href="{% url 'category-archive' ad_search.category.slug %}"><i class="lni-folder"></i>{{ ad_search.category.category_name }}</a>
-
-              </div>
-              <h4><a href="{% url 'ads-detail' ad_search.id %}">{{ ad_search.title }}</a></h4>
-              <span>Created: {{ ad_search.date_created }}</span>
-              <ul class="address">
-                <li>
-                  <i class="lni-map-marker"></i>{{ ad_search.state }}
-                </li>
-                <li>
-                  <i class="lni-alarm-clock"></i>{{ ad_search.date_created | date }}
-                </li>
-                <li>
-                  <i class="lni-user"></i> {{ ad_search.author.user }}
-                </li>
-                <li>
-                  <i class="lni-package"></i>{{ ad_search.condition }}
-                </li>
+        
+        <!--contents-->
+<section class="bg-white dark:bg-gray-900">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+      <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
+         <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Search Result for {{ searched }}</h2>
+      </div> 
+      <div class="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <!--box-->
+          <div class="text-center text-gray-500 dark:text-gray-400">
+              <img class="mx-auto mb-4 w-36 h-36 rounded-lg" src=" {{ ad_search.img_link }}" alt="Bonnie Avatar">
+              <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  <a href="#"> {{ ad_search.title }}</a>
+              </h3>
+              <p> {{ ad_search.author }}</p>
+            <p> {{ ad_search.prize }} INR</p>
+              <ul class="flex justify-center mt-4 space-x-4">
+                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    View More
+</button>
               </ul>
-              <div class="listing-bottom">
-                <h3 class="price float-left">$ {{ ad_search.price }}</h3>
-                <p class="btn-verified float-right"><i class="lni-check-box"></i> Verified
-                  Ad</p>
-              </div>
-            </div>
           </div>
-        </div>
         {% endfor %}
+         <!--box-->
       {% else %}
         <div class="container">
           <div class="col-lg-12">

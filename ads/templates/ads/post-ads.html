@@ -1,212 +1,65 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<!-- Page Header Start -->
-<div class="page-header" style="background: url('img/banner1.jpg');">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="breadcrumb-wrapper">
-          <h2 class="product-title">Post your Ads</h2>
-          <!-- <ol class="breadcrumb">
-            <li><a href="#">Home /</a></li>
-            <li class="current">Post your Ads</li>
-          </ol> -->
+<form id="ad-post-form" method="post" action="">
+  {% if request.user.is_authenticated %}
+  {% csrf_token %}
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div>
+            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Event name</label>
+            <input type="text" id="title" name="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Event Name" required="">
         </div>
-      </div>
-    </div>
-  </div>
+        <div>
+            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Prize</label>
+            <input type="text" id="prize" name="prize" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Prize Pool" required="">
+        </div>
+        <div>
+            <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Event Description</label>
+<textarea id="description" name="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
+
+        </div>
+      <div>
+            <label for="entry_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Entry Type</label>
+            <select id="entry" name="entry" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+<option selected>Choose Entry type</option>
+  <option value="Free">Free Entry</option>
+  <option value="Paid">Paid</option>
+</select>
+        </div>
+      <div>
+      <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Category</label>
+            <select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <option value="bgmi"  selected>BGMI</option>
+  <option value="Free Fire">Free Fire</option>
+  <option value="Others">Others</option>
+</select>
+        </div>
+      <div>
+            <label for="no_of_slots" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">No Of Slots</label>
+            <input type="text" id="no_of_slots" name="no_of_slots" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="No Of Slots" required="">
+        </div>
+        <div>
+            <label for="img_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Event Poster</label>
+            <input type="text" id="img_link" name="img_link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your Event Poster Url" required="">
+        </div>
+        <div>
+<label for="registeration_url" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Registeration Url</label>
+<div class="flex">
+  <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+    https://
+  </span>
+  <input type="text" id="registeration_url" name= "registeration_url" class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Registeration Url">
 </div>
-<!-- Page Header End -->
-
-<!-- Start Content -->
-<div id="content" class="section-padding">
-  <div class="container">
-    <div class="row justify-content-center">
-
-      <div class="col-lg-5 col-md-12 col-xs-12">
-        {% if request.user.is_authenticated %}
-        <div class="row page-content">
-          <form action="" class="ads-form" id="ad-post-form">
-
-            <label>Event Name <span class="req-aseteric">*</span></label>
-            <input type="text" id="title" class="form-control ad-post-form"
-              placeholder="e.g. Hunting Binoculars for Sale">
-            <div class="error-msg">
-              <div id="titlemsg"></div>
-            </div>
-
-            <label>Event Description <span class="req-aseteric">*</span></label>
-            <textarea rows="6" id="description" class="form-control ad-post-form"
-              placeholder="Provide as much detail as possible"></textarea>
-            <div class="error-msg">
-              <div id="descriptionmsg"></div>
-            </div>
-
-            <label>Select Game Category <span class="req-aseteric">*</span></label>
-            <div class="select ad-post-form">
-              <select id="category" name="category" class="form-control">
-                <option value="bgmi">bgmi</option>
-              </select>
-            </div>
-            <div class="error-msg">
-              <div id="categorymsg"></div>
-            </div>
-
-            <label>Prize <span class="req-aseteric">*</span> <span class="h-text"> (Value should be numeric.
-                Don't put $ sign.)</span></label>
-            <input type="number" id="price" class="form-control ad-post-form" placeholder="e.g. 2500">
-            <div class="error-msg">
-              <div id="pricemsg"></div>
-            </div>
-
-            <label>Entry Type <span class="req-aseteric">*</span></label>
-            <div class="select ad-post-form">
-              <select id="condition" name="condition" class="form-control">
-                <option value="Free">Free</option>
-                <option value="Paid">Paid</option>
-              </select>
-            </div>
-            <div class="error-msg">
-              <div id="conditionmsg"></div>
-            </div>
-<!--
-            <label>Select Your State <span class="req-aseteric">*</span></label>
-            <div class="select ad-post-form">
-              <select id="state" name="state" class="form-control">
-
-                <option value="Alabama">Alabama</option>
-                <option value="Alaska">Alaska</option>
-                <option value="Arizona">Arizona</option>
-                <option value="Arkansas">Arkansas</option>
-                <option value="California">California</option>
-                <option value="Colorado">Colorado</option>
-                <option value="Connecticut">Connecticut</option>
-                <option value="Delaware">Delaware</option>
-                <option value="District Of Columbia">District Of Columbia</option>
-                <option value="Florida">Florida</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Hawaii">Hawaii</option>
-                <option value="Idaho">Idaho</option>
-                <option value="Illinois">Illinois</option>
-                <option value="Indiana">Indiana</option>
-                <option value="Iowa">Iowa</option>
-                <option value="Kansas">Kansas</option>
-                <option value="Kentucky">Kentucky</option>
-                <option value="Louisiana">Louisiana</option>
-                <option value="Maine">Maine</option>
-                <option value="Maryland">Maryland</option>
-                <option value="Massachusetts">Massachusetts</option>
-                <option value="Michigan">Michigan</option>
-                <option value="Minnesota">Minnesota</option>
-                <option value="Mississippi">Mississippi</option>
-                <option value="Missouri">Missouri</option>
-                <option value="Montana">Montana</option>
-                <option value="Nebraska">Nebraska</option>
-                <option value="Nevada">Nevada</option>
-                <option value="New Hampshire">New Hampshire</option>
-                <option value="New Jersey">New Jersey</option>
-                <option value="New Mexico">New Mexico</option>
-                <option value="New York">New York</option>
-                <option value="North Carolina">North Carolina</option>
-                <option value="North Dakota">North Dakota</option>
-                <option value="Ohio">Ohio</option>
-                <option value="Oklahoma">Oklahoma</option>
-                <option value="Oregon">Oregon</option>
-                <option value="Pennsylvania">Pennsylvania</option>
-                <option value="Rhode Island">Rhode Island</option>
-                <option value="South Carolina">South Carolina</option>
-                <option value="South Dakota">South Dakota</option>
-                <option value="Tennessee">Tennessee</option>
-                <option value="Texas">Texas</option>
-                <option value="Utah">Utah</option>
-                <option value="Vermont">Vermont</option>
-                <option value="Virginia">Virginia</option>
-                <option value="Washington">Washington</option>
-                <option value="West Virginia">West Virginia</option>
-                <option value="Wisconsin">Wisconsin</option>
-                <option value="Wyoming">Wyoming</option>
-              </select>
-            </div>
-            <div class="error-msg">
-              <div id="statemsg"></div>
-            </div>
-
-            <label>Your City <span class="req-aseteric">*</span></label>
-            <input type="text" id="city" class="form-control ad-post-form" placeholder="e.g. Houston">
-            <div class="error-msg">
-              <div id="citymsg"></div>
-            </div>
-
-            <label>Product Brand <span class="h-text">(Leave empty if not applicable)</span></label>
-            <input type="text" id="brand" class="form-control ad-post-form" placeholder="e.g. Bushnell">
-            <div class="error-msg">
-              <div id="brandmsg"></div>
-            </div>-->
-
-            
-
-            <label>Registeration Link <span class="req-aseteric">*</span></label>
-            <input type="text" id="phone" class="form-control ad-post-form" placeholder="Registeration Link">
-            <div class="error-msg">
-              <div id="phonemsg"></div>
-            </div>
-
-            <label>Post Video Url <span class="h-text"> (Don't post embed link. Leave empty if not
-                applicable)</span></label>
-            <input type="url" id="video" class="form-control ad-post-form"
-              placeholder="e.g. https://www.youtube.com/watch?v=ooHvPr4Bk4I">
-            <label>Post Product Picture <span class="h-text"> (Max. 5 pictures. File size should be less than 3MB.
-                Allowed file type jpeg, jpg & png.) </span></label>
-
-            <input type="file" multiple>
-
-            <button type="button" id="saveBtn" class="btn btn-common log-btn">Post Ad</button>
-          </form>
+    <div class="flex items-start mb-6">
+        <div class="flex items-center h-5">
+        <input id="remember" type="checkbox" value="" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required="">
         </div>
-
-        <div class="success-msg">
-          <div id="formsuccessmsg" class="text-center"></div>
-        </div>
-
-        <div class="error-msg">
-          <div id="formerrmsg" class="text-center"></div>
-        </div>
-        {% endif %}
-      </div>
+        <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
     </div>
-  </div>
-</div>
-<!-- End Content -->
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var files = []
-    FilePond.registerPlugin(FilePondPluginFileValidateSize);
-    FilePond.registerPlugin(FilePondPluginFileValidateType);
-    FilePond.setOptions({
-      allowMultiple: true,
-      maxFiles: 5,
-      maxFileSize: '3MB'
-    })
-    const inputElement = document.querySelector('input[type="file"]');
-    const pond = FilePond.create(inputElement, {
-      acceptedFileTypes: ['image/png', 'image/jpeg'],
-      onaddfile: (err, fileItem) => {
-        if (!err) {
-          files.push(fileItem.file)
-        }
-        console.log(files)
-      },
-      onremovefile: (err, fileItem) => {
-        const index = files.indexOf(fileItem.file)
-        if (index > -1) {
-          files.splice(index, 1)
-        }
-        console.log(files)
-      }
-    });
-
+    <button type="submit" id="saveBtn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit Event</button>
+{% endif %}
+        </form>
+          <script>
     var formData = new FormData();
     $(document).on('click', '#saveBtn', function (e) {
 
@@ -222,41 +75,19 @@
         $("#categorymsg").html("<div class='alert alert-danger'>Category can not be empty</div>");
       }
 
-      if ($('#price').val() === "") {
-        $("#pricemsg").html("<div class='alert alert-danger'>Price can not be empty & must be numeric</div>");
+      if ($('#prize').val() === "") {
+        $("#pricemsg").html("<div class='alert alert-danger'>Prize can not be empty & must be numeric</div>");
       }
 
-      if ($('#condition').val() === "") {
-        $("#conditionmsg").html("<div class='alert alert-danger'>Condition can not be empty</div>");
+      if ($('#entry').val() === "") {
+        $("#conditionmsg").html("<div class='alert alert-danger'>Entry can not be empty</div>");
       }
-
-      if ($('#state').val() === "") {
-        $("#statemsg").html("<div class='alert alert-danger'>State can not be empty</div>");
-      }
-
-      if ($('#city').val() === "") {
-        $("#citymsg").html("<div class='alert alert-danger'>City can not be empty</div>");
-      }
-
-      if ($('#phone').val() === "") {
-        $("#phonemsg").html("<div class='alert alert-danger'>You must provide a phone no.</div>");
-      }
-
-
-      formData.append('length', files.length)
       formData.append('title', $('#title').val())
       formData.append('description', $('#description').val())
       formData.append('category', $('#category').val())
-      formData.append('price', $('#price').val())
-      formData.append('condition', $('#condition').val())
-      formData.append('state', $('#state').val())
-      formData.append('city', $('#city').val())
-      formData.append('brand', $('#brand').val())
-      formData.append('phone', $('#phone').val())
+      formData.append('prize', $('#prize').val())
+      formData.append('entry', $('#entry').val())
       formData.append('video', $('#video').val())
-      for (var i = 0; i < files.length; i++) {
-        formData.append('images' + i, files[i])
-      }
 
 
       formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
@@ -271,7 +102,7 @@
         enctype: 'multipart/form-data',
         success: function () {
           $("#formsuccessmsg").html(
-            "<div class='alert alert-success'>The Ad has been posted successfully and   waiting for approval by Admin.</div>"
+            "<div class='p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800' role='alert'>The Ad has been posted successfully and   waiting for approval by Admin.</div>"
           );
           // alert('The Ads has been posted successfully!')
           $('#ad-post-form').each(function () {
@@ -281,7 +112,7 @@
         },
         error: function (xhr, errmsg, err) {
           $("#formerrmsg").html(
-            "<div class='alert alert-danger'>You have one or more error. Please provide all required fields to post ad.</div>"
+            "<div class='p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800' role='alert'>You have one or more error. Please provide all required fields to post ad.</div>"
           );
           // console.log(xhr.status + ":" + xhr.responseText)
           // alert('Failed to post. Make sure you fill all the fields')
@@ -293,4 +124,4 @@
     console.log(formData)
   })
 </script>
-{% endblock content %}
+{%endblock content %}
