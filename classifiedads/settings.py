@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'pages',
     'ads',
     'profiles',
+    'taggit',
     'authentication.apps.AuthenticationConfig',
     # Packages
     'ckeditor',

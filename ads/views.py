@@ -5,7 +5,7 @@ from django.db.models import Count
 from .forms import PostAdsForm
 from django.contrib.auth.forms import User
 from django.contrib.auth.models import User
-
+from django.views.generic import UpdateView
 from django.contrib.auth.decorators import login_required
 
 from django.conf import settings
@@ -61,12 +61,14 @@ def post_ads(request):
 
         # Get ad video
         no_of_slots = request.POST.get('no_of_slots')
-
+        #tags
+        tags = request.POST.get('tags')
+        
         # Get image files length
         length = request.POST.get('length')
 
         # Create the ad
-        ads = Ads.objects.create(author=request.user.author, title=title, description=description, prize=prize, category=c, entry=entry, no_of_slots=no_of_slots, img_link=img_link, registeration_url=registeration_url, video=video)
+        ads = Ads.objects.create(author=request.user.author, title=title, description=description, prize=prize, category=c, entry=entry, no_of_slots=no_of_slots, img_link=img_link, registeration_url=registeration_url, tags=tags, video=video)
         
 
 
@@ -124,9 +126,11 @@ def ads_listing(request):
 def ads_detail(request, pk):
     ads_detail = get_object_or_404(Ads, pk=pk)
     ads_photos = AdsImages.objects.filter(ads=ads_detail)
-
+    similar_posts = ads_detail.tags.similar_objects()[:5]
+    
     context = {
         'ads_detail' : ads_detail,
+        'similar_posts':similar_posts,
         'ads_photos' : ads_photos,
     }
 
@@ -210,6 +214,12 @@ def ads_delete(request, pk):
     ad = get_object_or_404(Ads, pk=pk)
     ad.delete()
     return redirect("dashboard")
+
+class UpdateAdsView(UpdateView):
+  model=Ads
+  #form_class=PostAdsForm
+  template_name='ads/update_post.html'
+  fields=['title','description','prize','category','entry','registeration_url','no_of_slots','img_link','tags']
 
 
 
