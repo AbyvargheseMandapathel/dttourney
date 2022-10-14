@@ -18,6 +18,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 
 from ads.models import Author
+
 # Create your views here.
 
 # Post ads view
@@ -68,7 +69,7 @@ def post_ads(request):
         length = request.POST.get('length')
 
         # Create the ad
-        ads = Ads.objects.create(author=request.user.author, title=title, description=description, prize=prize, category=c, entry=entry, no_of_slots=no_of_slots, img_link=img_link, registeration_url=registeration_url, tags=tags, video=video)
+        ads = Ads.objects.create(author=request.user.author, title=title, description=description, prize=prize, category=c, entry=entry, no_of_slots=no_of_slots, img_link=img_link, registeration_url=registeration_url, video=video)
         
 
 
@@ -175,11 +176,21 @@ def ads_city_archive(request, slug):
 # Ads author archive view
 def ads_author_archive(request, pk):
     author = get_object_or_404(Author, pk=pk)
+    total_ads = request.user.author.ads_set.all().count()
+    featured_ads = request.user.author.ads_set.filter(is_featured=True).count()
     ads_by_author = Ads.objects.filter(author=author)
+
+    p=Paginator(Ads.objects.filter(author=author),5)
+
+    page = request.GET.get('page')
+    ads_by_user = p.get_page(page)
 
     context = {
         'author' : author,
-        'ads_by_author' : ads_by_author
+        'total_ads':total_ads,
+        'featured_ads':featured_ads,
+        'ads_by_author' : ads_by_author,
+        'ads_by_user': ads_by_user
     }
 
     return render(request, 'ads/author-archive.html', context)
@@ -200,7 +211,7 @@ def ads_search(request):
       #  ads_search_result = Ads.objects.filter(category__category_name=category)
     #else:
      #   ads_search_result = Ads.objects.filter(state__state_name=state).filter(category__category_name=category)
-    
+      
       context = {
         'searched':searched,
         'ads_search_result':ads_search_result
@@ -219,7 +230,7 @@ class UpdateAdsView(UpdateView):
   model=Ads
   #form_class=PostAdsForm
   template_name='ads/update_post.html'
-  fields=['title','description','prize','category','entry','registeration_url','no_of_slots','img_link','tags']
+  fields=['title','description','prize','category','entry','registeration_url','no_of_slots','is_active','img_link','tags']
 
 
 

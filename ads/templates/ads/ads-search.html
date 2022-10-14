@@ -9,7 +9,6 @@
     <div class="row">
       
       {% if ads_search_result %}
-        {% for ad_search in ads_search_result %}
         
         <!--contents-->
 <section class="bg-white dark:bg-gray-900">
@@ -18,6 +17,7 @@
          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Search Result for {{ searched }}</h2>
       </div> 
       <div class="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {% for ad_search in ads_search_result %}
         <!--box-->
           <div class="text-center text-gray-500 dark:text-gray-400">
               <img class="mx-auto mb-4 w-36 h-36 rounded-lg" src=" {{ ad_search.img_link }}" alt="Bonnie Avatar">

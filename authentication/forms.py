@@ -43,6 +43,7 @@ class UserRegistrationForm(UserCreationForm):
         'placeholder': 'Email Address'
     }))
 
+
     
     
     class Meta:

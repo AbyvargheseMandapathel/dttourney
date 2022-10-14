@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 
 from ads.models import Ads, Category, AdsImages, AdsTopBanner, AdsRightBanner, AdsBottomBanner
 from django.contrib.auth.models import User
+from ads.models import Author
 
 
 # Model Forms.
@@ -64,4 +65,14 @@ def terms_of_service(request):
 def contact(request):
     return render(request, 'pages/contact.html')
 
+def ads_search(request):
+    
+    if request.method=="POST":
+      searched=request.POST['searched']
+      ads_search_result = Ads.objects.filter(title__contains=searched)
+      context = {
+        'searched':searched,
+        'ads_search_result':ads_search_result
+    }
 
+    return render(request, 'ads/ads-search.html',context)

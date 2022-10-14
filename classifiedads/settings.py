@@ -46,11 +46,14 @@ INSTALLED_APPS = [
     'ads',
     'profiles',
     'taggit',
+    'django_social_share',
     'authentication.apps.AuthenticationConfig',
     # Packages
     'ckeditor',
     'debug_toolbar',
     'embed_video',
+    'phonenumber_field',
+    'phonenumbers'
 ]
 
 MIDDLEWARE = [
