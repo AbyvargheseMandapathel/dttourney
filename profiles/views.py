@@ -1,15 +1,23 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+#user
+from django.contrib.auth.models import User
+
 
 # importing messages
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+#ads
+from ads.models import Ads, Category, AdsImages, AdsTopBanner, AdsRightBanner, AdsBottomBanner
+
 
 from django.contrib.auth.forms import User
 from ads.models import Author
 
 from authentication.forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 
+#pagination
+from django.core.paginator import Paginator
 
 # Model Forms.
 
@@ -18,11 +26,19 @@ from authentication.forms import UserRegistrationForm, UserUpdateForm, ProfileUp
 # Profile Dashboard view
 @login_required(login_url='login')
 def profile_dashboard(request):
-    ads_posted = request.user.author.ads_set.all()
+    ads_posted = request.user.author.ads_set.all().order_by('-date_created')
+    #ads_posted =Ads.objects.filter(author= request.user).order_by('-date_posted')
     total_ads = request.user.author.ads_set.all().count()
     featured_ads = request.user.author.ads_set.filter(is_featured=True).count()
 
+    #pagination
+    p=Paginator(request.user.author.ads_set.all(),6)
+
+    page = request.GET.get('page')
+    ads = p.get_page(page)
+
     context = {
+        'ads':ads,
         'ads_posted' : ads_posted,
         'total_ads' : total_ads,
         'featured_ads' : featured_ads

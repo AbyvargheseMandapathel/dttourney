@@ -17,32 +17,7 @@ class PostAdsForm(forms.ModelForm):
         'placeholder': 'Description'
     }))
 
-    price = forms.CharField(widget=forms.NumberInput(attrs={
-        'class': 'form-control',  
-        'name': 'price', 
-        'placeholder': 'Price'
-    }))
-
-    city = forms.CharField(widget=forms.TextInput(attrs={
-        'type': 'text',
-        'class': 'form-control',  
-        'name': 'city', 
-        'placeholder': 'City'
-    }))
-
-    brand = forms.CharField(widget=forms.TextInput(attrs={
-        'type': 'text',
-        'class': 'form-control',  
-        'name': 'brand', 
-        'placeholder': 'Brand'
-    }))
-
-    phone = forms.CharField(widget=forms.TextInput(attrs={
-        'type': 'text',
-        'class': 'form-control',  
-        'name': 'phone', 
-        'placeholder': 'Phone'
-    }))
+    
 
     class Meta:
         model = Ads

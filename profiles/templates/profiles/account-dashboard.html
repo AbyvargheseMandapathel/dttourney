@@ -1,128 +1,137 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<!-- Page Header Start -->
-<div class="page-header" style="background: url('img/banner1.jpg');">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="breadcrumb-wrapper">
-          <h2 class="product-title">Dashboard</h2>
-          <!-- <ol class="breadcrumb">
-            <li><a href="#">Home /</a></li>
-            <li class="current">Dashboard</li>
-          </ol> -->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Page Header End -->
+<!-- component -->
+<!-- Profile Card -->
+<div>
+   <div class="md:grid grid-cols-4 grid-rows-1  bg-white gap-2 p-4 rounded-xl">
+        <div class="md:col-span-1 h-50 shadow-xl ">
+                <div class="flex w-full h-full relative">
+                    <img src="{{ request.user.author.profile_pic.url }}" class="w-44 h-44 m-auto" alt="">
 
-<!-- Start Content -->
-<div id="content" class="section-padding">
-  <div class="container">
-    <div class="row">
-      <!-- Account Sidebar -->
-      {% include 'profiles/account-sidebar.html' %}
-      <!-- Account Sidebar -->
-      <div class="col-sm-12 col-md-8 col-lg-9">
-        <div class="page-content">
-          <div class="inner-box">
-            <div class="dashboard-box">
-              <h2 class="dashbord-title">Dashboard</h2>
-            </div>
-            <div class="dashboard-wrapper">
-              <div class="dashboard-sections">
-                <div class="row">
-                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div class="dashboardbox">
-                      <div class="icon"><i class="lni-write"></i></div>
-                      <div class="contentbox">
-                        <h2>Total Ads</h2>
-                        <h3>{{ total_ads }} Ads</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div class="dashboardbox">
-                      <div class="icon"><i class="lni-add-files"></i></div>
-                      <div class="contentbox">
-                        <h2>Featured Ads</h2>
-                        <h3>{{ featured_ads }} Ads</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                    <div class="dashboardbox">
-                      <div class="icon"><i class="lni-support"></i></div>
-                      <div class="contentbox">
-                        <h2><a href="#">Offers / Messages</a></h2>
-                        <h3>2040 Messages</h3>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
-              </div>
-              {% if ads_posted %}
-              <table class="table table-responsive dashboardtable tablemyads">
-                <thead>
-                  <tr>
-                    <!-- <th>Photo</th> -->
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Date Posted</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for ad in ads_posted %}
-                  <tr data-category="active">
-                    
-                    
-
-                  
-                    
-                    <td data-title="Title">
-                      <h3>{{ ad.title }}</h3>
-                      <!-- <span>Ad ID: ng3D5hAMHPajQrM</span> -->
-                    </td>
-                    <td data-title="Category"><span class="adcategories">{{ ad.category }}</span></td>
-                    <td data-title="Price">
-                      <h3>{{ ad.price }}</h3>
-                    </td>
-
-                    <td data-title="Date">
-                      <h3>{{ ad.date_created }}</h3>
-                    </td>
-                    <td data-title="Ad Status">
-                      {% if ad.is_active %}
+        </div>
+        <div class="md:col-span-3 h-50 shadow-xl p-4 space-y-2 p-3">
+                <div class="flex ">
+                    <span
+                        class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Name:</span>
+                    <input 
+                        class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6"
+                        type="text" value="{{ user.username }}"  readonly/>
+                </div>
+                <div class="flex ">
+                    <span
+                        class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Email:</span>
+                    <input 
+                        class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6"
+                        type="text" value="{{ user.email }}"  readonly/>
+                </div>
+                 <div class="flex ">
+                    <span
+                        class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Total Ads</span>
+                    <input 
+                        class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6"
+                        type="text" value="{{ total_ads }}"  readonly/>
+                </div>
+           <div class="flex ">
+                    <span
+                        class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Featured Ads</span>
+                    <input 
+                        class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6"
+                        type="text" value="{{ featured_ads }}"  readonly/>
+                </div>
+        </div>
+        <!--<div class="md:col-span-3 h-48 shadow-xl p-4 space-y-2 hidden md:block">
+            <h3 class="font-bold uppercase"> Profile Description</h3>
+            <p class=""> 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget laoreet diam, id luctus lectus. Ut consectetur nisl ipsum, et faucibus sem finibus vitae. Maecenas aliquam dolor at dignissim commodo. Etiam a aliquam tellus, et suscipit dolor. Proin auctor nisi velit, quis aliquet sapien viverra a. 
+            </p>
+        </div>-->
+            
+    </div>
+</div>
+{% if ads_posted %}
+<div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="py-3 px-6">
+                    <span class="sr-only">Image</span>
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Event
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Status
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Prize
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Action
+                </th>
+              <th scope="col" class="py-3 px-6">
+                    Upgrade
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for ads in ads %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <!--item-->
+                <td class="p-4 w-32">
+                    <img src="{{ ads.img_link }}" alt="{{ ads.title }}">
+                </td>
+                <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                    {{ ads.title }}
+                </td>
+                <td class="py-4 px-6">
+                    <div class="flex items-center space-x-3">
+                        {% if ads.is_active %}
                       <span class="adstatus adstatusactive">Active</span>
                       {% else %}
                       <span class="adstatus adstatusinactive">Inactive</span>
                       {% endif %}
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-delete" href="{% url 'ads-delete' pk=ad.pk %}"><i class="lni-trash"></i></a>
-                      </div>
-                    </td>
-                    
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                    </div>
+                </td>
+                <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                    {{ ads.prize }}
+                </td>
+                <td class="py-4 px-6">
+                    <!--<a href="{% url 'ads-update' pk=ads.pk %}" class="font-medium text-blue-600 dark:text-red-500 hover:underline">Edit</a>-->
+                  <a href="{% url 'ads-delete' pk=ads.pk %}" class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a
+                </td>
+              <!-- Upgrade-->
+                <td class="py-4 px-6">
+                    <!--<a href="{% url 'ads-update' pk=ads.pk %}" class="font-medium text-blue-600 dark:text-red-500 hover:underline">Edit</a>-->
+                  <a href="wa.me/917306255503" class="font-medium text-red-600 dark:text-red-500 hover:underline">Upgrade</a
+                </td>
+              <!-- Upgrade-->
+              <!--item-->
+              
+            </tr>
+           {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+  {% endif %}
+</div>
+<!-- Pagination-->
+
+<div class="flex flex-col items-center">
+  {% if ads.has_previous %}
+  <!-- Buttons -->
+  <div class="inline-flex mt-2 xs:mt-0">
+      <a href="?page={{ads.previous_page_number }}"><button class="py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          Prev
+      </button>
+      </a>
+    {% endif %}
+    {% if ads.has_next %}
+       <a href="?page={{ads.next_page_number }}"><button class="py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          Next
+      </button></a>
   </div>
 </div>
-<!-- End Content -->
-
-
+{% endif %}
 {% endblock content %}

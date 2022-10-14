@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 
 from ads.models import Ads, Category, AdsImages, AdsTopBanner, AdsRightBanner, AdsBottomBanner
+from django.contrib.auth.models import User
+from ads.models import Author
+
 
 # Model Forms.
 
@@ -10,10 +13,13 @@ from ads.models import Ads, Category, AdsImages, AdsTopBanner, AdsRightBanner, A
 def home(request):
     
     # Fetch recend ads
-    recent_ads = Ads.objects.filter(is_active=True).order_by('date_created')[0:3]
+    recent_ads = Ads.objects.filter(is_active=True).order_by('-date_created')[0:4]
     
     # Fetch featured Ads
     featured_ads = Ads.objects.filter(is_featured=True).filter(is_active=True)
+    #get counts
+    ads_count = Ads.objects.all().count()
+    user_count = User.objects.all().count()
     
     # Browse Ads by Category
     category_listing = Category.objects.all()
@@ -40,6 +46,8 @@ def home(request):
         #'state_listing' : state_listing,
         'sidebar_banners' : sidebar_banners,
         'top_banner' : top_banner,
+        'user_count':user_count,
+        'ads_count':ads_count,
         'bottom_banner' : bottom_banner,
     }
 
@@ -57,4 +65,14 @@ def terms_of_service(request):
 def contact(request):
     return render(request, 'pages/contact.html')
 
+def ads_search(request):
+    
+    if request.method=="POST":
+      searched=request.POST['searched']
+      ads_search_result = Ads.objects.filter(title__contains=searched)
+      context = {
+        'searched':searched,
+        'ads_search_result':ads_search_result
+    }
 
+    return render(request, 'ads/ads-search.html',context)

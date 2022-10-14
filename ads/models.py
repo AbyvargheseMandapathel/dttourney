@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 from embed_video.fields import EmbedVideoField
+#tags
+from taggit.managers import TaggableManager
 
 # Create your models here.
 
@@ -37,12 +39,17 @@ class Ads(models.Model):
     video = EmbedVideoField(null=True, blank=True) 
     is_featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
+    img_link= models.CharField(max_length=1000)
+    tags=TaggableManager()
 
     class Meta:
         verbose_name_plural = "Classified Ads"
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('dashboard')
       
 # Category Model
 class Category(models.Model):
@@ -65,7 +72,7 @@ class Category(models.Model):
 # Image Model
 class AdsImages(models.Model):
     ads = models.ForeignKey(Ads, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='uploads/%Y/%m/%d', default=None)
+    #image = models.ImageField(upload_to='uploads/%Y/%m/%d', default=None)
 
     def __str__(self):
         return self.ads.title

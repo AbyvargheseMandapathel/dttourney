@@ -5,16 +5,20 @@ from django.db.models import Count
 from .forms import PostAdsForm
 from django.contrib.auth.forms import User
 from django.contrib.auth.models import User
-
+from django.views.generic import UpdateView
 from django.contrib.auth.decorators import login_required
 
 from django.conf import settings
 from django.core.mail import send_mail
 
+#Pagination
+from django.core.paginator import Paginator
+
 # importing messages
 from django.contrib import messages
 
 from ads.models import Author
+
 # Create your views here.
 
 # Post ads view
@@ -50,24 +54,31 @@ def post_ads(request):
         # Get user's phone
         phone = request.POST.get('phone')
 
+        #Get Image URL
+        img_link = request.POST.get('img_link')
+
         # Get ad video
         video = request.POST.get('video')
 
         # Get ad video
         no_of_slots = request.POST.get('no_of_slots')
-
+        #tags
+        tags = request.POST.get('tags')
+        
         # Get image files length
         length = request.POST.get('length')
 
         # Create the ad
-        ads = Ads.objects.create(author=request.user.author, title=title, description=description, prize=prize, category=c, entry=entry, no_of_slots=no_of_slots, registeration_url=registeration_url, video=video)
+        ads = Ads.objects.create(author=request.user.author, title=title, description=description, prize=prize, category=c, entry=entry, no_of_slots=no_of_slots, img_link=img_link, registeration_url=registeration_url, video=video)
+        
+
 
         # Attach the images with the associated ad
-        for file_num in range(0, int(length)):
-            AdsImages.objects.create(
-                ads=ads,
-                image=request.FILES.get(f'images{file_num}')
-            )
+        #for file_num in range(0, int(length)):
+         #   AdsImages.objects.create(
+      #          ads=ads,
+                #image=request.FILES.get(f'images{file_num}')
+ #           )
         
         # Send email notificaton to Admin
         mail_subject = "New Ads submitted"
@@ -85,17 +96,29 @@ def post_ads(request):
             to_list,
             fail_silently=False,
         )
+        return render(request, 'ads/post-success.html')
         
     return render(request, 'ads/post-ads.html')
 
 # Ads listing view
 def ads_listing(request):
     ads_listing = Ads.objects.all()
-    category_listing = Category.objects.annotate(total_ads=Count('ads')).order_by('category_name')
+
+    #setting up pagination
+
+    p=Paginator(Ads.objects.all(),12)
+
+    page = request.GET.get('page')
+    ads = p.get_page(page)
+    
+
+  
+    #category_listing = Category.objects.annotate(total_ads=Count('ads')).order_by('category_name')
 
     context = {
-        'ads_listing' : ads_listing,
-        'category_listing' : category_listing
+        #'ads_listing' : ads_listing,
+        'ads':ads
+      #  'category_listing' : category_listing
     }
 
     return render(request, 'ads/ads-listing.html', context)
@@ -104,9 +127,11 @@ def ads_listing(request):
 def ads_detail(request, pk):
     ads_detail = get_object_or_404(Ads, pk=pk)
     ads_photos = AdsImages.objects.filter(ads=ads_detail)
-
+    similar_posts = ads_detail.tags.similar_objects()[:5]
+    
     context = {
         'ads_detail' : ads_detail,
+        'similar_posts':similar_posts,
         'ads_photos' : ads_photos,
     }
 
@@ -151,33 +176,48 @@ def ads_city_archive(request, slug):
 # Ads author archive view
 def ads_author_archive(request, pk):
     author = get_object_or_404(Author, pk=pk)
+    total_ads = request.user.author.ads_set.all().count()
+    featured_ads = request.user.author.ads_set.filter(is_featured=True).count()
     ads_by_author = Ads.objects.filter(author=author)
+
+    p=Paginator(Ads.objects.filter(author=author),5)
+
+    page = request.GET.get('page')
+    ads_by_user = p.get_page(page)
 
     context = {
         'author' : author,
-        'ads_by_author' : ads_by_author
+        'total_ads':total_ads,
+        'featured_ads':featured_ads,
+        'ads_by_author' : ads_by_author,
+        'ads_by_user': ads_by_user
     }
 
     return render(request, 'ads/author-archive.html', context)
 
 # Ads search/filter view
 def ads_search(request):
-
-    state = request.GET.get('state_name')
-    category = request.GET.get('category_name')
-
-    if state:
-        ads_search_result = Ads.objects.filter(state__state_name=state)
-    elif category:
-        ads_search_result = Ads.objects.filter(category__category_name=category)
-    else:
-        ads_search_result = Ads.objects.filter(state__state_name=state).filter(category__category_name=category)
     
-    context = {
+    if request.method=="POST":
+      searched=request.POST['searched']
+      ads_search_result = Ads.objects.filter(title__contains=searched)
+    
+    #state = request.GET.get('state_name')
+    #category = request.GET.get('category_name')
+
+    #if state:
+     #   ads_search_result = Ads.objects.filter(state__state_name=state)
+    #elif category:
+      #  ads_search_result = Ads.objects.filter(category__category_name=category)
+    #else:
+     #   ads_search_result = Ads.objects.filter(state__state_name=state).filter(category__category_name=category)
+      
+      context = {
+        'searched':searched,
         'ads_search_result':ads_search_result
     }
 
-    return render(request, 'ads/ads-search.html', context)
+    return render(request, 'ads/ads-search.html',context)
 
 # Ads delete view
 @login_required(login_url='login')
@@ -185,6 +225,12 @@ def ads_delete(request, pk):
     ad = get_object_or_404(Ads, pk=pk)
     ad.delete()
     return redirect("dashboard")
+
+class UpdateAdsView(UpdateView):
+  model=Ads
+  #form_class=PostAdsForm
+  template_name='ads/update_post.html'
+  fields=['title','description','prize','category','entry','registeration_url','no_of_slots','is_active','img_link','tags']
 
 
 

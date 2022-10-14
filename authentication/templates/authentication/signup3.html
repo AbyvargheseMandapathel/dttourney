@@ -1,0 +1,48 @@
+<!--<form method="POST" action="" role="form">
+  {% csrf_token %}
+  <input type = "text" name = "username">
+  <input type = "password" name = "password">
+  <button type="submit">Login</button>-->
+
+  {% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="title"><span>Sign Up Form</span></div>
+        <form method="POST" action="" role="form">
+            {% csrf_token %}
+          <div class="row">
+            <i class="fas fa-user"></i>
+           {{ reg_form.username }}
+                    {{ reg_form.username.errors }}
+          </div>
+          <div class="row">
+            <i class="fas fa-user"></i>
+ {{ reg_form.email }}
+                    {{ reg_form.email.errors }}          </div>
+          <div class="row">
+            <i class="fas fa-user"></i>
+ {{ reg_form.password1 }}
+                    {{ reg_form.password1.errors }}          </div>
+          <div class="row">
+            <i class="fas fa-lock"></i>
+            {{ reg_form.password2 }}
+                    {{ reg_form.password2.errors }}
+          </div>
+          <div class="row button">
+            <input type="submit" value="SignUp">
+          <div class="signup-link">Alraedy  a member? <a href="{% url 'login' %}">Login now</a></div>
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>

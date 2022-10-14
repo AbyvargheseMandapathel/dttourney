@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import environ
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,11 +45,15 @@ INSTALLED_APPS = [
     'pages',
     'ads',
     'profiles',
+    'taggit',
+    'django_social_share',
     'authentication.apps.AuthenticationConfig',
     # Packages
     'ckeditor',
     'debug_toolbar',
     'embed_video',
+    'phonenumber_field',
+    'phonenumbers'
 ]
 
 MIDDLEWARE = [
@@ -176,15 +184,16 @@ CKEDITOR_CONFIGS = {
 
 #django_heroku.settings(locals())
 
-EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'  
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
 # MAILER_EMAIL_BACKEND = EMAIL_BACKEND
-DEFAULT_FROM_EMAIL ='dailytourneys@rediffmail.com'
-EMAIL_USE_TLS = True  
-MAILJET_API_KEY = "74296ff4a1ba4020c8d3c10328ab759d"
-MAILJET_API_SECRET = "24da9dabd74ccf1e7822076670b69e53"
-EMAIL_HOST = 'in-v3.mailjet.com'  
-EMAIL_HOST_USER = 'dailytourneys@rediffmail.com'  
-EMAIL_HOST_PASSWORD = 'Aby@2000'
-EMAIL_PORT = 587
 
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False 
+#MAILJET_API_KEY = env('MAILJET_API_KEY')
+#MAILJET_API_SECRET = env('MAILJET_API_SECRET')
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')  
+EMAIL_HOST_PASSWORD = env('pass')
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

@@ -1,264 +1,188 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!--stylesheet-->
-  <link rel="stylesheet" href="{% static 'css/styleindex.css' %}">
-  <link rel="stylesheet" media="screen and (max-width: 1050px)" href="{% static 'css/ministyle.css' %}">
-  <!--End stylesheet-->
-
-  <!--Title-->
-  <title>Daily Tourneys</title>
-  <link rel="shortcut icon" href="logo.png" type="image/x-icon">
-   <!--End Title-->
-
-  <!--Slider-->
-  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-  <!--End Slider-->
-
-   <!--Fonts-->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
-  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
-  <link href="https://fonts.googleapis.com/css2?family=Coda+Caption:wght@800&display=swap" rel="stylesheet"> 
-  <!--End Fonts-->
-
-  <!-- FONTAWESOME -->
-  <script src="https://kit.fontawesome.com/114dee6860.js" crossorigin="anonymous"></script>
-  <!-- END FONTAWESOME -->
-
-  <!--Jquery-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!--End Jquery-->
-  
-  <!-- visitors count -->
-  <script>
-  function cb(response) {
-      document.getElementById('count').innerText = response.value;
-  }
-  </script>
-  <script async       src="https://api.countapi.xyz/hit/eSportsDaily.hacknon1000.repl.co/visits?callback=cb">
-  </script>
-  <!-- END visitors count -->
-
-</head>
-<body>
-  <!--SideNav-->
-  <div id="mySidenav" class="sidenav">
-    <div class="sidenav-main">
-      <div class="sub-header">
-        <div class="open-nav-btn">
-          <button style="font-size:25px;cursor:pointer;color: #d4d4d4;border: 3px solid grey;border-radius: 8px;padding: 5px 15px;background: transparent;" onclick="closeNav()">&#9776;</button>
-        </div>
-        <img src="images/logo.png" alt="" class="logo">
-        <div class="logo-title">DAILY<span style="color: white;">TOURNEYS</span></div>
-      </div>
-
-      <div class="nav-item">
-        <div class="fas-ico fas-ico-active">
-          <i class="fas fa-home"></i>
-        </div>
-        <div class="nav-item-title">&nbspHOME</div>
-      </div>
-    {% if user.is_authenticated %}
-      <div class="nav-item">
-        <div class="fas-ico">
-          <i class="fa fa-times"></i>
-        </div>
-        <a href = "{% url 'logout' %}"><div class="nav-item-title">&nbspSIGNOUT</div></a>
-      </div>
-{% else %}
-
-      <div class="nav-item">
-        <div class="fas-ico">
-          <i class="fa fa-user"></i>
-        </div>
-        <a href = "{% url 'login' %}"><div class="nav-item-title">&nbspSIGNIN</div></a>
-      </div>
-      <div class="nav-item">
-        <div class="fas-ico">
-          <i class="fa fa-user-plus"></i>
-        </div>
-        <a href = "{% url 'signup' %}"><div class="nav-item-title">&nbspSIGNUP</div></a>
-      </div>
-        {% endif %}
-
-      
-      <div class="nav-item">
-        <div class="fas-ico">
-          <i class="fas fa-info"></i>
-        </div>
-        <div class="nav-item-title">&nbspABOUT</div>
-      </div>
-
-    </div>
-    <div class="sidenav-sub" onclick="closeNav()"></div>
-  </div>
-  <!--End SideNav-->
-
-  <!--Header-->
-  <div class="header">
-    <div class="sub-header">
-      <div class="open-nav-btn">
-        <button style="font-size:25px;cursor:pointer;color: #d4d4d4;border: 1px solid grey;border-radius: 8px;padding: 5px 15px;background: transparent;" onclick="openNav()">&#9776;</button>
-      </div>
-      <img src="images/logo.png" alt="" class="logo">
-    <div class="logo-title">DAILY<span style="color: white;">TOURNEYS</span></div>
-    </div>
-  </div>
-  <!--End Header-->
-
-  <!--Content-->
-  <div class="content">
- {% for featured_ad in featured_ads %}
-    <!--PREMIUM-->
-    <div class="section section-2">
-      <div class="tag">FEATURED</div>
-      <div class="flex-class">
-        <!--SLIDER-->
-        <div class="carousel" data-flickity='{ "groupCells": true, "autoPlay": true }'>
-            <!--SLIDER ITEM-->
-            <div class="premium-carousel-cell">
-              {% for img in featured_ad.adsimages_set.all %}
-                {% if forloop.first %}
-              <!--PREMIUM IMG-->
-              <img src="{{ img.image.url }}" alt="banner1">
-              {% endif %}
-                {% endfor %}
-              <!--END PREMIUM IMG-->
-              <!--PREMIUM TITLE-->
-              <div class="P-list-item-title">{{ featured_ad.title }}</div>
-              <!--END PREMIUM TITLE-->
-              <!--PREMIUM DESCRIPTION-->
-              <div class="P-list-item-desc">
-                <span>Category:{{ featured_ad.category }}<br></span>
-                Author:{{ featured_ad.author }} <br>
-                Prizepool : {{ featured_ad.prize }}<br>
-              </div>
-              <!--END PREMIUM DESCRIPTION-->
-              <!--PREMIUM BUTTON (link)-->
-              <button class="P-list-item-btn"><a href="{% url 'ads-detail' featured_ad.id %}">{{ featured_ad.entry }} </a>
-              
-              </button>
-              <!--END PREMIUM BUTTON-->
+{% block content %}
+<!--<section class="contents-slider">
+   
+        <div class="swiper mySwiper">
+          
+            <div class="swiper-wrapper">
+              {% for banner in top_banner%}
+                <div class="swiper-slide">
+                 <img src="{{ banner.image.url }}" alt="hi"></div>
+               {% endfor %}
             </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
         </div>
-            <!--END SLIDER ITEM-->
-      </div>  
+    </section>-->
+<!--search-->
+<div>
+<form class="flex items-center" method="post" action="{% url 'ads-search' %}">  
+  {% csrf_token %}
+    <label for="simple-search" class="sr-only">Search</label>
+    <div class="relative w-full">
+        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+            <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+        </div>
+        <input type="text" name="searched" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search evnets"  required="">
     </div>
-    <!--END PREMIUM-->
-{% endfor %}
-    
-    <!--PUBG MOBILE TOURNAMENTS-->
-    <div class="section section-3">
-      <div class="tag-thumbnail">
-        <div class="tag"><div class="rotate"> RECENT <span></span> LISTINGS</div></div>
-      </div>
+    <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <span class="sr-only">Search</span>
+    </button>
+</form>
+</div>
+<!--search-->
+<!-- Banner Slider -->
+    <section class="contents-slider">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+               {% for banner in top_banner%}
+                <div class="swiper-slide"><img src="{{ banner.image.url }}" alt=""></div>
+              {% endfor %}
 
-      <div class="scroll">
-        <div class="list">
-        <!-- LIST-->
-{% for recent_ad in recent_ads %}
-          <!--LIST ITEM-->
-          <div class="list-item">
-            {% for img in recent_ad.adsimages_set.all %}
-                    {% if forloop.first %}
-            <!--PUBG MOBILE LIST IMAGE-->
-            <img src="{{ img.image.url }}" alt="" class="list-thumbnail">
-            {% endif %}
-                    {% endfor %}
-            <!--END PUBG MOBILE LIST IMAGE-->
-            <div class="list-desc">
-              <!--PUBG MOBILE LIST TITLE-->
-              <div class="list-title">{{ recent_ad.title}}</div>
-              <!--END PUBG MOBILE LIST TITLE-->
-              <div class="list-prize">Prize Amount&nbsp 
-                <!--PUBG MOBILE PRIZE AMOUNT-->
-                <span>&#8377;&nbsp{{ recent_ad.prize }}</span>
-                <!--END PUBG MOBILE PRIZE AMOUNT-->
-              </div>
-              
-              
-              <div class="list-entry">
-                <div class="list-entry">
-                  <button class="P-list-item-btn"><a href="{% url 'ads-detail' recent_ad.id %}">{{ recent_ad.entry }}</a>
-                    <!--PUBG MOBILE ENTRY AMOUNT->
-                    <!--END PUBG MOBILE ENTRY AMOUNT-->
-                  </button>
+            <!-- banner sliding next/prev button -->
+            <!-- <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div> -->
+
+            <!--  -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+<!-- Featured Ads-->
+
+    <!-- Tailwind Cards Container -->
+    <div class="bg-white">
+        <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+            <h1 class="text-center text-2xl font-semibold opacity-80 mb-5">Featured Ads</h1>
+            <div class="grid grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+               {% for featured_ad in featured_ads %}
+                <!-- Card 1-->
+                <div class="group hover:shadow-lg pb-4 rounded-md">
+                    <div
+                        class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                       
+                      <img src="{{ featured_ad.img_link }}"
+                            alt="{{ featured_ad.title }}"
+                            class="h-full w-full object-cover object-center group-hover:opacity-75">
+             
+                    </div>
+                    <h3 class="mt-4 text-lg text-center font-semibold text-gray-900"><span>{{ featured_ad.title }}</span></h3>
+                    <p class="mt-1 text-sm text-center text-gray">{{ featured_ad.prize }} INR</p>
+                    <div class="view-more-btn-container">
+                        <button class="text-sm text-center mt-2 view-more-button">
+                            <a class="view-more-card-button" href="{% url 'ads-detail' featured_ad.id %}">View More</a>
+                        </button>
+                    </div>
                 </div>
-              </div>
-            </div>
+     {% endfor %}
           </div>
-          <!--END LIST ITEM-->
+<!-- Featured Ads-->
 
-        <!--END LIST-->
+    <!-- Tailwind Cards Container -->
+        <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+            <h1 class="text-center text-2xl font-semibold opacity-80 mb-5">Recently Added</h1>
+            <div class="grid grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+               {% for recent_ad in recent_ads %}
+                <!-- Card 1-->
+                <div class="group hover:shadow-lg pb-4 rounded-md">
+                    <div
+                        class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                       
+                      <img src="{{ recent_ad.img_link }}"
+                            alt="{{ recent_ad.title}}"
+                            class="h-full w-full object-cover object-center group-hover:opacity-75">
+             
+                    </div>
+                    <h3 class="mt-4 text-lg text-center font-semibold text-gray-900"><span>{{ recent_ad.title}}</span></h3>
+                    <p class="mt-1 text-sm text-center text-gray">{{ recent_ad.prize}} INR</p>
+                    <div class="view-more-btn-container">
+                        <button class="text-sm text-center mt-2 view-more-button">
+                            <a class="view-more-card-button" href="{% url 'ads-detail' recent_ad.id %}">View More</a>
+                        </button>
+                    </div>
+                </div>
+     {% endfor %}
+                        </div>
         </div>
-      </div>
     </div>
-    <!--END PUBG MOBILE TOURNAMENTS-->
-{% endfor %}
-    <!--VISITORS COUNT-->
-    <div class="section section-5">
-      <div class="visit-count">
-        
-        <div id="count">0</div>
-        <div class="visit-tag">Visited</div>
-      </div>  
-    </div>
-    <!--END VISITORS COUNT-->
-    
-    <!--FOOTER-->
-    <div class="footer">
-      <div class="social-icons">
-        <!--WHATSAPP-->
-        <a href="https://chat.whatsapp.com/JZyo79x2MPF5QcjyV7Ek6a" target="_blank">
-        <!--END WHATSAPP-->
-            <div class="fab-class fab-whatsapp">
-              <i id="whatsapp-icn" class="fab fa-whatsapp"></i>
-            </div>
-        </a>
-        <!--INSTAGRAM-->
-        <a href="https://instagram.com/_esportsdaily_?igshid=1xifmsei6shk6" target="_blank">
-        <!--END INSTAGRAM-->
-            <div class="fab-class fab-instagram">
-              <i id="instagram-icn" class="fab fa-instagram"></i>
-            </div>
-        </a>
-        <!--FACEBOOK-->
-        <a href="https://www.facebook.com/ESports-Daily-105646001496738/" target="_blank">
-        <!--END FACEBOOK-->
-            <div class="fab-class fab-facebook">
-              <i id="facebook-icn" class="fab fa-facebook"></i>
-            </div>
-        </a>
-        <!--DISCORD-->
-        <a href="https://discord.gg/4b2E6DPdSC" target="_blank">
-        <!--END DISCORD-->
-            <div class="fab-class fab-discord">
-              <i id="discord-icn" class="fab fa-discord"></i>
-            </div>
-        </a>
-      </div>
-    </div>
+<!-- STATS-->
+<section class="bg-white dark:bg-gray-900">
+  <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+      <dl class="grid max-w-screen-md gap-8 mx-auto text-gray-900 sm:grid-cols-3 dark:text-white">
+          <div class="flex flex-col items-center justify-center">
+              <dt class="mb-2 text-3xl md:text-4xl font-extrabold">{{ads_count}}</dt>
+              <dd class="font-light text-gray-500 dark:text-gray-400">Events listed</dd>
+          </div>
+          <div class="flex flex-col items-center justify-center">
+              <dt id="count"class="mb-2 text-3xl md:text-4xl font-extrabold">0</dt>
+              <dd class="font-light text-gray-500 dark:text-gray-400"> Page Visits</dd>
+          </div>
+          <div class="flex flex-col items-center justify-center">
+              <dt class="mb-2 text-3xl md:text-4xl font-extrabold">{{user_count}}</dt>
+              <dd class="font-light text-gray-500 dark:text-gray-400">Users</dd>
+          </div>
+      </dl>
   </div>
-  <!-- SCRIPT -->
-  <script src="{% static 'js/scriptnew.js' %}"></script>
-  <!--END SCRIPT-->
+</section>
+<!--STATS-->
+    <!--contact us
+ <div class="grid max-w-screen-xl grid-cols-1 gap-8 px-8 py-16 mx-auto rounded-lg md:grid-cols-2 md:px-12 lg:px-16 xl:px-32 dark:bg-gray-800 dark:text-gray-100">
+	<div class="flex flex-col justify-between">
+		<div class="space-y-2">
+			<h2 class="text-4xl font-bold leading-tight lg:text-5xl">Let's talk!</h2>
+			<div class="dark:text-gray-400">Vivamus in nisl metus? Phasellus.</div>
+		</div>
+		<img src="assets/svg/doodle.svg" alt="" class="p-6 h-52 md:h-64">
+	</div>
+	<form novalidate="" class="space-y-6 ng-untouched ng-pristine ng-valid">
+		<div>
+			<label for="name" class="text-sm">Full name</label>
+			<input id="name" type="text" placeholder="" class="w-full p-3 rounded dark:bg-gray-800">
+		</div>
+		<div>
+			<label for="email" class="text-sm">Email</label>
+			<input id="email" type="email" class="w-full p-3 rounded dark:bg-gray-800">
+		</div>
+		<div>
+			<label for="message" class="text-sm">Message</label>
+			<textarea id="message" rows="3" class="w-full p-3 rounded dark:bg-gray-800"></textarea>
+		</div>
+		<button type="submit" class="w-full p-3 bg-violet-400 text-sm font-bold tracking-wide uppercase rounded dark:bg-violet-400 dark:text-gray-900">Send Message</button>
+	</form>
+</div>
+contact us-->
+      <!--{% for banner in bottom_banner%}
+<div class="bg-cover bg-center  h-auto text-white py-24 px-10 object-fill" style="background-image: url({{ banner.image.url }})">
+       <div class="md:w-1/2">
+         {% endfor %}
+        <!--<p class="text-3xl font-bold">Contact US for Yours</p>-->
+        <!--<p class="text-2xl mb-10 leading-none">Want To get Your Ad Featured</p>
+        <a href="https://wa.me/918078879864?text=I'm%20interested%20to%20promote%20our%20event%20in%20your%20platform" class="bg-purple-800 py-4 px-8 text-white font-bold uppercase text-xs rounded hover:bg-gray-200 hover:text-gray-800">Contact us</a>
+        </div>  
+</div>-->
+<!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-  <!--IMAGE SLIDER SCRIPT-->
-  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-  <script>
-    $('.main-carousel').flickity({
-      // options
-      cellAlign: 'left',
-      wrapAround: true,
-      freeScroll: true
-    });
-  </script>
-  <!--END IMAGE SLIDER SCRIPT-->
-</body>
-</html>
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 0,
+            centeredSlides: true,
+            autoplay: {
+              delay: 2500,
+                disableOnInteraction: false,
+             },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    </script>
+{% endblock content %}

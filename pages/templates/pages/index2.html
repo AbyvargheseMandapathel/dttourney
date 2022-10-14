@@ -252,4 +252,86 @@
 <!-- Advertisements Top Banner Area End -->
 
 
+<!-- copy-->
+<section>
+  <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h2 class="text-lg font-bold">Recently Added</h2>
+
+      <p class="text-2xl font-medium text-indigo-600">
+        Register Now And Start Grinding
+      </p>
+    </div>
+    <div class="swiper mt-8">
+      <ul class="swiper-wrapper"> 
+        {% for recent_ad in recent_ads %}
+        <li class="swiper-slide">
+          <a href="{% url 'ads-detail' recent_ad.id %}" class="block">
+            <div>
+              <p class="text-xs text-indigo-500"> {{ recent_ad.author }}</p>
+
+              <h5 class="font-bold">{{ recent_ad.title}}</h5>
+            </div>
+{% for img in recent_ad.adsimages_set.all %}
+                    {% if forloop.first %}
+            <img
+              alt="Smart Watch"
+              src="{{ img.image.url }}"
+              class="aspect-square w-full object-cover"
+            />
+{% endif %}
+                {% endfor %}
+            <p class="mt-1 text-sm font-medium text-gray-700">{{ recent_ad.prize}}INR</p>
+          </a>
+        </li>
+  {% endfor %}
+      <div class="swiper-pagination !relative !bottom-0 mt-12"></div> 
+    </div>
+  </div>
+</section>
+
+<script>
+  new Swiper('.swiper', {
+    loop: true,
+    spaceBetween: 32,
+    slidesPerView: 2,
+    pagination: {
+      clickable: true,
+      el: '.swiper-pagination',
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+      },
+      1024: {
+        slidesPerView: 4,
+      },
+    },
+  })
+</script>
+<!-- recently viewed-->
+<!--copy-->
+<div class="col-sm-3">
+							<div class="thumb-wrapper">
+								<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
+								<div class="img-box">
+									<img src="/examples/images/products/headphone.jpg" class="img-fluid" alt="Headphone">
+								</div>
+								<div class="thumb-content">
+									<h4>Sony Headphone</h4>									
+									<div class="star-rating">
+										<ul class="list-inline">
+											<li class="list-inline-item"><i class="fa fa-star"></i></li>
+											<li class="list-inline-item"><i class="fa fa-star"></i></li>
+											<li class="list-inline-item"><i class="fa fa-star"></i></li>
+											<li class="list-inline-item"><i class="fa fa-star"></i></li>
+											<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+										</ul>
+									</div>
+									<p class="item-price"><strike>$25.00</strike> <b>$23.99</b></p>
+									<a href="#" class="btn btn-primary">Add to Cart</a>
+								</div>						
+							</div>
+						</div>	
+<!--copy-->
 {% endblock content %}

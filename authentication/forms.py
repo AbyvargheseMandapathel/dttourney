@@ -12,7 +12,7 @@ class UserRegistrationForm(UserCreationForm):
     # Styling the username form fields
     username = forms.CharField(widget=forms.TextInput(attrs={
         'type': 'text',
-        'class': 'form-control',  
+        'class': 'block w-full pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md',  
         'name': 'username', 
         'placeholder': 'Username'
     }))
@@ -20,7 +20,7 @@ class UserRegistrationForm(UserCreationForm):
     # Styling the password1 form fields
     password1 = forms.CharField(widget=forms.TextInput(attrs={
         'type': 'password',
-        'class': 'form-control',  
+        'class': 'block w-full pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md',  
         'name': 'password1', 
         'placeholder': 'Password'
     }))
@@ -28,7 +28,7 @@ class UserRegistrationForm(UserCreationForm):
     # Styling the password2 form fields
     password2 = forms.CharField(widget=forms.TextInput(attrs={
         'type': 'password',
-        'class': 'form-control',  
+        'class': 'block w-full pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md',  
         'name': 'password2', 
         'placeholder': 'Retype Password'
     }))
@@ -39,9 +39,10 @@ class UserRegistrationForm(UserCreationForm):
     # Styling the email form fields
     email = forms.EmailField(widget=forms.TextInput(attrs={
         'type': 'email',
-        'class': 'form-control',  
+        'class': ' content-center block w-full pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md',  
         'placeholder': 'Email Address'
     }))
+
 
     
     
@@ -62,7 +63,7 @@ class UserRegistrationForm(UserCreationForm):
 class EmailValidationOnForgotPassword(PasswordResetForm):
     email = forms.EmailField(label="", widget=forms.TextInput(attrs={
         'type': 'email',
-        'class': 'form-control',  
+        'class': '',  
         'placeholder': 'Email Address'
     }))
 
@@ -77,7 +78,7 @@ class EmailSetPassword(SetPasswordForm):
     # Styling the password1 form fields
     new_password1 = forms.CharField(label="", widget=forms.TextInput(attrs={
         'type': 'password',
-        'class': 'form-control',  
+        'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',  
         'name': 'new_password1', 
         'placeholder': 'Password'
     }))
@@ -85,7 +86,7 @@ class EmailSetPassword(SetPasswordForm):
     # Styling the password2 form fields
     new_password2 = forms.CharField(label="", widget=forms.TextInput(attrs={
         'type': 'password',
-        'class': 'form-control',  
+        'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',  
         'name': 'new_password2', 
         'placeholder': 'Retype Password'
     }))
@@ -94,21 +95,21 @@ class EmailSetPassword(SetPasswordForm):
 class UserUpdateForm(ModelForm):
     first_name = forms.CharField(label="First Name", widget=forms.TextInput(attrs={
         'type': 'text',
-        'class': 'form-control',  
+        'class': 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md',  
         'name': 'first_name', 
         'placeholder': 'First Name'
     }))
 
     last_name = forms.CharField(label="Last Name", widget=forms.TextInput(attrs={
         'type': 'text',
-        'class': 'form-control',  
+        'class': 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md',  
         'name': 'last_name', 
         'placeholder': 'Last Name'
     }))
 
     email = forms.EmailField(label="Email", widget=forms.TextInput(attrs={
         'type': 'email',
-        'class': 'form-control',  
+        'class': 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md',  
         'placeholder': 'Email Address'
     }))
 
