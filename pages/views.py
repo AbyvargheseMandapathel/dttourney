@@ -3,6 +3,9 @@ from django.shortcuts import render, get_object_or_404
 from ads.models import Ads, Category, AdsImages, AdsTopBanner, AdsRightBanner, AdsBottomBanner
 from django.contrib.auth.models import User
 from ads.models import Author
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 
 # Model Forms.
@@ -63,6 +66,23 @@ def terms_of_service(request):
 
 # Contact view
 def contact(request):
+    if request.method=="POST":
+      email = request.POST.get('email')
+      subject = request.POST.get('subject')
+      message = request.POST.get('message')
+
+      data = {
+        'email':email,
+        'subject':subject,
+        'message':message
+      }
+      message ='''
+      New message: {}
+
+      From: {}
+      '''.format(data['message'],data['email'])
+      #send_mail('Contact Form',message,settings.EMAIL_HOST_USER,['dailytourneys2022@gmail.com'],fail_silently=False
+      send_mail(data['subject'],message,'',['dailytourneys2022@gmail.com'])
     return render(request, 'pages/contact.html')
 
 def ads_search(request):
