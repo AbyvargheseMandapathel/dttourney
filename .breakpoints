@@ -3,16 +3,16 @@
     "ads/views.py": [
       {
         "id": "928342b9-8355-453b-82c2-23052b9d8819",
-        "line": 9,
-        "version": 658,
-        "index": 256
+        "line": 8,
+        "version": 1021,
+        "index": 255
       }
     ],
     "classifiedads/settings.py": [
       {
         "id": "c879b0de-10f4-43dc-b878-bd1b714e2871",
         "line": 8,
-        "version": 209,
+        "version": 405,
         "index": 205
       }
     ],
@@ -20,7 +20,7 @@
       {
         "id": "37169276-f54a-466a-bc4c-9021a0831061",
         "line": 3,
-        "version": 97,
+        "version": 298,
         "index": 63
       }
     ],
@@ -36,7 +36,7 @@
       {
         "id": "d5169400-d595-47b0-9092-e28640d7d04c",
         "line": 30,
-        "version": 46,
+        "version": 113,
         "index": 858
       }
     ]
