@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load social_share %}
 {% load embed_video_tags %}
 {% block content %}
 <!--stylesheet-->
@@ -43,7 +44,7 @@
           <li>PrizePool: <span>{{ ads_detail.prize }}</span></li>
           <li>No Of Slots: <span>{{ ads_detail.no_of_slots }}</span></li>
           <li>Entry: <span>{{ ads_detail.entry }}</span></li>
-          <li>Author: <span><a href="{% url 'author-archive' ads_detail.author.pk %}">{{ ads_detail.author }}</a></span></li>
+          <li>Author: <span><!--<a href="{% url 'author-archive' ads_detail.author.pk %}">{{ ads_detail.author }}</a>-->{{ ads_detail.author }}</span></li>
           
         </ul>
       </div>
@@ -57,8 +58,8 @@
       </div>
  
       <div class = "social-links">
-        <p>Share At: </p>
-        <a href = "#">
+      <!--  <p>Share At: </p>
+        <!--<a href = "#">
           <i class = "fab fa-facebook-f"></i>
         </a>
         <a href = "#">
@@ -66,16 +67,56 @@
         </a>
         <a href = "#">
           <i class = "fab fa-instagram"></i>
-        </a>
-        <a href = "#">
+        </a>-->
+        <!--{% post_to_whatsapp  object_or_url '' 'fab fa-whatsapp' %}-->
+        <!--<a href = "">
           <i class = "fab fa-whatsapp"></i>
-        </a>
-        <a href = "#">
+        </a>-->
+        <!--<a href = "#">
           <i class = "fab fa-pinterest"></i>
-        </a>
+        </a>-->
       </div>
     </div>
   </div>
 </div>
+<!-- related articles
+<section class="py-6 sm:py-12 dark:bg-gray-800 dark:text-gray-100">
+	<div class="container p-6 mx-auto space-y-8">
+		<div class="space-y-2 text-center">
+			<h2 class="text-3xl font-bold">Related</h2>
+			
+		</div>
+    {% for ads_detail in similar_posts %} 
+		<div class="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-1 lg:grid-cols-4">
+			<article class="flex flex-col dark:bg-gray-900">
+				<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum">
+					<img alt="" class="object-cover w-full h-52 dark:bg-gray-500" src="{{ ads_detail.img_link }}">
+				</a>
+				<div class="flex flex-col flex-1 p-6">
+					<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum"></a>
+					<a rel="noopener noreferrer" href="#" class="text-xs tracking-wider uppercase hover:underline dark:text-violet-400">{{ ads_detail.category }}</a>
+					<h3 class="flex-1 py-2 text-lg font-semibold leading-snug">{{ ads_detail.title }}</h3>
+					<div class="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-400">
+						<span>{{ ads_detail.title }}</span>
+						<span></span>
+					</div>
+				</div>
+			</article>
+			{% endfor %}
+			
+		</div>
+	</div>
+</section>
+<!-- component -->
+<!--{% for banner in bottom_banner%}
+<div class="bg-cover bg-center  h-auto text-white py-24 px-10 object-fill" style="background-image: url({{ banner.image.url }})">
+       <div class="md:w-1/2">
+         {% endfor %}
+        <!--<p class="text-3xl font-bold">Contact US for Yours</p>-->
+      <!--  <p class="text-2xl mb-10 leading-none">Want To get Your Ad Featured</p>-->
+       <!-- <a href="https://wa.me/918078879864?text=I'm%20interested%20to%20promote%20our%20event%20in%20your%20platform" class="bg-purple-800 py-4 px-8 text-white font-bold uppercase text-xs rounded hover:bg-gray-200 hover:text-gray-800">Contact us</a>
+        </div>  
+</div>
+<!-- related articles-->
   <script src = "{% static 'js/product.js' %}"></script>
   {% endblock content %}

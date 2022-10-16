@@ -1,5 +1,5 @@
 from django.urls import path
-
+from .views import UpdateAdsView
 from .import views
 
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path('city/<slug:slug>/', views.ads_city_archive, name='city-archive'),
     path('author/<int:pk>/', views.ads_author_archive, name='author-archive'),
     path('ads-search/', views.ads_search, name='ads-search'),
+    path('ads-update/<int:pk>', UpdateAdsView.as_view() , name='ads-update'),
 ]

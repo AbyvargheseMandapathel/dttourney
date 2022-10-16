@@ -1,6 +1,55 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<!-- component -->
+<!-- Profile Card -->
+<div>
+   <div class="md:grid grid-cols-4 grid-rows-1  bg-white gap-2 p-4 rounded-xl">
+        <div class="md:col-span-1 h-50 shadow-xl ">
+                <div class="flex w-full h-full relative">
+                    <img src="{{ request.user.author.profile_pic.url }}" class="w-44 h-44 m-auto" alt="">
+
+                </div>
+        </div>
+        <div class="md:col-span-3 h-50 shadow-xl p-4 space-y-2 p-3">
+                <div class="flex ">
+                    <span
+                        class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Name:</span>
+                    <input 
+                        class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6"
+                        type="text" value="{{ user.username }}"  readonly/>
+                </div>
+                <div class="flex ">
+                    <span
+                        class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Email:</span>
+                    <input 
+                        class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6"
+                        type="text" value="{{ user.email }}"  readonly/>
+                </div>
+                 <div class="flex ">
+                    <span
+                        class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Total Ads</span>
+                    <input 
+                        class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6"
+                        type="text" value="{{ total_ads }}"  readonly/>
+                </div>
+           <div class="flex ">
+                    <span
+                        class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Featured Ads</span>
+                    <input 
+                        class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6"
+                        type="text" value="{{ featured_ads }}"  readonly/>
+                </div>
+        </div>
+        <!--<div class="md:col-span-3 h-48 shadow-xl p-4 space-y-2 hidden md:block">
+            <h3 class="font-bold uppercase"> Profile Description</h3>
+            <p class=""> 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget laoreet diam, id luctus lectus. Ut consectetur nisl ipsum, et faucibus sem finibus vitae. Maecenas aliquam dolor at dignissim commodo. Etiam a aliquam tellus, et suscipit dolor. Proin auctor nisi velit, quis aliquet sapien viverra a. 
+            </p>
+        </div>-->
+            
+    </div>
+</div>
 {% if ads_posted %}
 <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -21,6 +70,9 @@
                 <th scope="col" class="py-3 px-6">
                     Action
                 </th>
+              <th scope="col" class="py-3 px-6">
+                    Upgrade
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -35,27 +87,28 @@
                 </td>
                 <td class="py-4 px-6">
                     <div class="flex items-center space-x-3">
-                        <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white rounded-full border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
-                            <span class="sr-only">Quantity button</span>
-                            <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                        </button>
-                        <div>
-                            <input type="number" id="first_product" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1" required="">
-                        </div>
-                        <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white rounded-full border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
-                            <span class="sr-only">Quantity button</span>
-                            <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                        </button>
+                        {% if ads.is_active %}
+                      <span class="adstatus adstatusactive">Active</span>
+                      {% else %}
+                      <span class="adstatus adstatusinactive">Inactive</span>
+                      {% endif %}
                     </div>
                 </td>
                 <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                     {{ ads.prize }}
                 </td>
                 <td class="py-4 px-6">
-                    <a href="#" class="font-medium text-blue-600 dark:text-red-500 hover:underline">Edit</a>
-                  <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a
+                    <!--<a href="{% url 'ads-update' pk=ads.pk %}" class="font-medium text-blue-600 dark:text-red-500 hover:underline">Edit</a>-->
+                  <a href="{% url 'ads-delete' pk=ads.pk %}" class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a
                 </td>
+              <!-- Upgrade-->
+                <td class="py-4 px-6">
+                    <!--<a href="{% url 'ads-update' pk=ads.pk %}" class="font-medium text-blue-600 dark:text-red-500 hover:underline">Edit</a>-->
+                  <a href="https://wa.me/917306255503" class="font-medium text-red-600 dark:text-red-500 hover:underline">Upgrade</a
+                </td>
+              <!-- Upgrade-->
               <!--item-->
+              
             </tr>
            {% endfor %}
             </tr>

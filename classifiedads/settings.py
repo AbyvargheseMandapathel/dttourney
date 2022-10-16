@@ -187,8 +187,6 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
 # MAILER_EMAIL_BACKEND = EMAIL_BACKEND
 
