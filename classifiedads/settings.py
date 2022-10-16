@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+#import django_on_heroku
 import environ
 # Initialise environment variables
 env = environ.Env()
@@ -29,7 +30,7 @@ SECRET_KEY = '+$#4m3n(oz_n#ip-3bpl5g5ew7)v$gq66rwhgz(dune&0(2!)g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dtclone10.abyvarghese2000.repl.co']
+ALLOWED_HOSTS = ['dtclone10.abyvarghese2000.repl.co','vercel.app']
 
 
 # Application definition
@@ -93,23 +94,27 @@ WSGI_APPLICATION = 'classifiedads.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 """PostgreSQL DB"""
-# DATABASES = {
-#     'default': {
-#         'NAME': 'ClassifiedAdsDB',
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'USER': 'postgres',
-#         'PASSWORD': 'admin123',
-#         'HOST': 'localhost',
-#     }
-# }
+DATABASES = {
+     'default': {
+         'NAME': 'd4irbs4ks6nhuc',
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'USER': 'rucdrlwlbofjwf',
+         'PASSWORD': 'c1f7eb2f3d5fd7e42a90fa2769e13807a4505a397a2fe1b6f45996083e32cd32',
+          'PORT': 5432,
+         'HOST': 'ec2-34-231-42-166.compute-1.amazonaws.com',
+     }
+ }
 
 """SQLite DB"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+#DATABASES = {
+#   'default': {
+#       'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
+
+# Prevent Django from loading an adapter
+#DATABASES = {}
 
 
 
@@ -182,8 +187,6 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-#django_heroku.settings(locals())
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
 # MAILER_EMAIL_BACKEND = EMAIL_BACKEND
 
@@ -197,3 +200,6 @@ EMAIL_HOST_PASSWORD = env('pass')
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+#heroku
+#django_on_heroku.settings(locals())
